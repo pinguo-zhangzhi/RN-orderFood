@@ -1,6 +1,5 @@
+
 ![Pepperoni - Empowered by Futurice](/docs/pepperoni.png?v=2)
-Futurice React Native Starter Kit
-===
 [![Build Status](https://travis-ci.org/futurice/pepperoni-app-kit.svg?branch=master)](https://travis-ci.org/futurice/pepperoni-app-kit)
 [![React Native](https://img.shields.io/badge/react%20native-0.29-brightgreen.svg)](https://github.com/facebook/react-native)
 [![Sponsored](https://img.shields.io/badge/chilicorn-sponsored-brightgreen.svg)](http://spiceprogram.org/oss-sponsorship/)

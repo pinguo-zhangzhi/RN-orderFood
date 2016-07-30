@@ -1,0 +1,1 @@
+LOCK_OTHER_LDFLAGS = -framework "WebKit"

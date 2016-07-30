@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A6186A4C07C327AE7722F96B6287F725B718EF37",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A6EF6FCA96D5750A13FCA8CD02B242DE7DA7DAA8" : 0,
+    "A6186A4C07C327AE7722F96B6287F725B718EF37" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D98DB890-11CB-46EC-A1C7-B294E361246A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A6EF6FCA96D5750A13FCA8CD02B242DE7DA7DAA8" : "",
+    "A6186A4C07C327AE7722F96B6287F725B718EF37" : "RNOrderFood\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "RNOrderFood",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios\/RNOrderFood.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/futurice\/pepperoni-app-kit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A6186A4C07C327AE7722F96B6287F725B718EF37"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pinguo-zhangzhi\/RN-orderFood.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A6EF6FCA96D5750A13FCA8CD02B242DE7DA7DAA8"
+    }
+  ]
+}
