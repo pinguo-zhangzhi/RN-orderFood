@@ -32,9 +32,21 @@ class NavigationView extends Component {
     }
   }
 
-  _gotoHomeView(props){
+  _routeToView(OFNavigationType){
     let prevNaviState = NaviState;
-    props.routeToView(OFNavigationType_home);
+    this.props.routeToView(OFNavigationType);
+    if (prevNaviState !== NaviState) {
+      this.setState({
+        navState:NaviState
+      })
+    }
+    return false;
+  }
+
+  _popThisView()
+  {
+    let prevNaviState = NaviState;
+    this.props.popThisView();
     if (prevNaviState !== NaviState) {
       this.setState({
         navState:NaviState
@@ -44,14 +56,13 @@ class NavigationView extends Component {
   }
 
   _renderScene(props){
-    console.log(this.props);
     let prevKey = 'scene_';
     switch (props.scene.key) {
       case prevKey+OFNavigationType_login:
-          return (<Login gotoHomeView={this._gotoHomeView.bind(this, this.props)} />);
+          return (<Login routeToView={this._routeToView.bind(this)} />);
         break;
       case prevKey+OFNavigationType_home:
-          return (<Home />);
+          return (<Home popThisView={this._popThisView.bind(this)} />);
         break;
       case prevKey+OFNavigationType_list:
 

@@ -15,6 +15,11 @@ export default connect(
         type:'push',
         key:type
       });
+    },
+    popThisView(){
+      dispatch({
+        type:'pop'
+      })
     }
   })
 )(NavigationView);

@@ -29,7 +29,7 @@ class Login extends Component {
   }
 
   _onPress(){
-    this.props.gotoHomeView();
+    this.props.routeToView(OFNavigationType_home);
   }
 
   render(){
