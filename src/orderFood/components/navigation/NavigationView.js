@@ -8,7 +8,8 @@ import {
   View,
   TouchableHighlight,
   ScrollView,
-  NavigationExperimental
+  Animated,
+  NavigationExperimental as Navigation
 } from 'react-native'
 
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list, NaviState} from '../appRouter/RouterAction'
@@ -19,7 +20,7 @@ import Home from '../../views/Home/Home'
 const {
  CardStack: NavigationCardStack,
  StateUtils: NavigationStateUtils
-} = NavigationExperimental
+} = Navigation
 
 class NavigationView extends Component {
   constructor(props) {
@@ -32,9 +33,9 @@ class NavigationView extends Component {
     }
   }
 
-  _routeToView(OFNavigationType){
+  _pushView(OFNavigationType){
     let prevNaviState = NaviState;
-    this.props.routeToView(OFNavigationType);
+    this.props.pushView(OFNavigationType);
     if (prevNaviState !== NaviState) {
       this.setState({
         navState:NaviState
@@ -43,10 +44,10 @@ class NavigationView extends Component {
     return false;
   }
 
-  _popThisView()
+  _popView()
   {
     let prevNaviState = NaviState;
-    this.props.popThisView();
+    this.props.popView();
     if (prevNaviState !== NaviState) {
       this.setState({
         navState:NaviState
@@ -59,27 +60,55 @@ class NavigationView extends Component {
     let prevKey = 'scene_';
     switch (props.scene.key) {
       case prevKey+OFNavigationType_login:
-          return (<Login routeToView={this._routeToView.bind(this)} />);
+          return (<Login pushView={this._pushView.bind(this)} />);
         break;
       case prevKey+OFNavigationType_home:
-          return (<Home popThisView={this._popThisView.bind(this)} />);
+          return (<Home popView={this._popView.bind(this)} />);
         break;
       case prevKey+OFNavigationType_list:
 
         break;
       default:
-        return (<View text='fuck your mather' />);
+        return (<View />);
     }
 
   }
 
+  _renderNavigationCard(props){
+    return (
+      <Navigation.Card
+        {...props}
+        key={props.scene.route.key}
+        renderScene={this._renderScene.bind(this)}
+       />
+    )
+  }
+
+  _navigationCompleted(){
+    console.log('_navigationCompleted')
+  }
+
   render() {
     return (
-      <NavigationCardStack
+      <Navigation.AnimatedView
+        style={{flex: 1}}
         navigationState={this.state.navState}
-        //onNavigate={this._handleAction.bind(this)}
-        renderScene={this._renderScene.bind(this)} />
+        renderScene={this._renderNavigationCard.bind(this)}
+        applyAnimation={function(pos, navState){
+          Animated
+            .spring(pos, {toValue: navState.index, duration:200, bounciness: 0})
+            .start(function(){
+              this._navigationCompleted();
+            }.bind(this));
+        }.bind(this)}
+       />
     )
+    // return (
+    //   <NavigationCardStack
+    //     navigationState={this.state.navState}
+    //     //onNavigate={this._handleAction.bind(this)}
+    //     renderScene={this._renderScene.bind(this)} />
+    // )
   }
 }
 

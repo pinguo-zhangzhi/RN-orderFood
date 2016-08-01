@@ -29,7 +29,7 @@ class Login extends Component {
   }
 
   _onPress(){
-    this.props.routeToView(OFNavigationType_home);
+    this.props.pushView(OFNavigationType_home);
   }
 
   render(){
@@ -69,11 +69,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#EDEDED'
   }
 })
-// const Button = ({title, onPress}) => (
-//   <TouchableHighlight
-//     underlayColor='#EFEFEF'
-//     onPress={onPress}
-//     style={styles.button}>
-//       <Text>{title}</Text>
-//   </TouchableHighlight>
-//)

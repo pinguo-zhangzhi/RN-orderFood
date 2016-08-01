@@ -10,13 +10,13 @@ export default connect(
 
   }),
   dispatch => ({
-    routeToView(type) {
+    pushView(type) {
       dispatch({
         type:'push',
         key:type
       });
     },
-    popThisView(){
+    popView(){
       dispatch({
         type:'pop'
       })
