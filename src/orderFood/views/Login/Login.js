@@ -10,7 +10,9 @@ import {
   Image,
   TouchableHighlight,
   NavigationExperimental,
-  Dimensions
+  Dimensions,
+  NativeModules,
+  AsyncStorage
 } from 'react-native'
 
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
