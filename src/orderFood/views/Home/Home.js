@@ -1,3 +1,4 @@
+'use strict';
 
 import React, { Component } from 'react'
 
@@ -6,8 +7,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableHighlight,
+  TouchableOpacity,
   ScrollView,
+  AlertIOS,
   NavigationExperimental
 } from 'react-native'
 
@@ -22,50 +26,94 @@ const Button = ({title, onPress}) => (
   </TouchableHighlight>
 )
 
-class Home extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+var NUM_ITEMS = 3;
 
+class Home extends Component {
+  static title = '<ScrollView>';
+  static description = 'Component that enables scrolling through child components.';
+
+  makeItems = (nItems: number, styles): Array<any> => {
+    var items = [];
+    items[0] = (
+      <Button onPress={this._onPress.bind(this)} title="预定早餐" key= {0}/>
+    );
+    items[1] = (
+      <Button onPress={this._onPress.bind(this)} title="预定午餐"  key= {1}/>
+    );
+    items[2] = (
+      <Button onPress={this._onPress.bind(this)} title="预定晚餐"  key= {2}/>
+    );
+    items[3] = (
+      <Button onPress={this._onPress.bind(this)} title="我的订单"  key= {3}/>
+    );
+    return items;
+  };
   _onPress(){
     this.props.popView(true);
   }
+  render() {
+    // One of the items is a horizontal scroll view
+    var items = this.makeItems(NUM_ITEMS, styles.itemWrapper);
+    // items[4] = (
+    //   <ScrollView key={'scrollView'} horizontal={true}>
+    //     {this.makeItems(NUM_ITEMS, [styles.itemWrapper, styles.horizontalItemWrapper])}
+    //   </ScrollView>
+    // );
 
-  render(){
-    return (
+    var verticalScrollView = (
       <View style={styles.container}>
-        <Text style={styles.title} >Hello From Home</Text>
-        <Button onPress={this._onPress.bind(this)} title="pop to login view" />
+        <Image resizeMode={Image.resizeMode.cover} style={styles.logo} source={require('./logo.png')}></Image>
+        <Text style={styles.welcomeText}>马剑光，欢迎使用订餐系统</Text>
+        <ScrollView style={styles.verticalScrollView}>
+          {items}
+        </ScrollView>
       </View>
-    )
+
+    );
+
+    return verticalScrollView;
   }
 }
 
 export default Home;
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#F5FCFF',
-    flex: 1
-  },
+
   container: {
     flex: 1,
     backgroundColor: 'white'
   },
-  title: {
-    fontSize: 40,
-    marginTop: 200,
-    textAlign: 'center',
-    color:'black'
+  logo:{
+    margin:0
+  },
+  welcomeText:{
+    fontSize:20,
+    color:'black',
+    textAlign:'center'
   },
   button: {
-    height: 70,
-    marginTop: 20,
+    height: 50,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 20,
     marginRight: 20,
     backgroundColor: '#EDEDED'
-  }
+  },
+
+  verticalScrollView: {
+      margin: 10,
+  },
+  itemWrapper: {
+      backgroundColor: '#dddddd',
+      alignItems: 'center',
+      borderRadius: 5,
+      borderWidth: 5,
+      borderColor: '#a52a2a',
+      padding: 30,
+      margin: 5,
+  },
+  horizontalItemWrapper: {
+      padding: 50
+    }
 })
