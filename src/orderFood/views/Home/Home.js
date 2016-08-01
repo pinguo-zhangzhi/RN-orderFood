@@ -15,7 +15,7 @@ import {
   NavigationExperimental
 } from 'react-native'
 
-import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
+import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list,OFNavigationType_orderBreakfast} from '../../components/appRouter/RouterAction'
 
 const Button = ({title, onPress}) => (
   <TouchableHighlight
@@ -29,13 +29,11 @@ const Button = ({title, onPress}) => (
 var NUM_ITEMS = 3;
 
 class Home extends Component {
-  static title = '<ScrollView>';
-  static description = 'Component that enables scrolling through child components.';
 
   makeItems = (nItems: number, styles): Array<any> => {
     var items = [];
     items[0] = (
-      <Button onPress={this._onPress.bind(this)} title="预定早餐" key= {0}/>
+      <Button onPress={this._onPressBreakfast.bind(this)} title="预定早餐" key= {0}/>
     );
     items[1] = (
       <Button onPress={this._onPress.bind(this)} title="预定午餐"  key= {1}/>
@@ -50,6 +48,9 @@ class Home extends Component {
   };
   _onPress(){
     this.props.popView(true);
+  }
+  _onPressBreakfast(){
+    this.props.pushView(OFNavigationType_orderBreakfast, true);
   }
   render() {
     // One of the items is a horizontal scroll view
