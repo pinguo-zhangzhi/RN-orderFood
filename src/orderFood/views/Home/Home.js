@@ -29,13 +29,14 @@ class Home extends Component {
   }
 
   _onPress(){
-    this.props.backToLoginView(OFNavigationType_login);
+    this.props.popView(true);
   }
 
   render(){
     return (
       <View style={styles.container}>
         <Text style={styles.title} >Hello From Home</Text>
+        <Button onPress={this._onPress.bind(this)} title="pop to login view" />
       </View>
     )
   }
