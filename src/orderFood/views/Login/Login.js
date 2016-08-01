@@ -29,7 +29,7 @@ class Login extends Component {
   }
 
   _onPress(){
-    this.props.pushView(OFNavigationType_home);
+    this.props.pushView(OFNavigationType_home, true);
   }
 
   render(){

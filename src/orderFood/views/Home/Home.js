@@ -29,7 +29,7 @@ class Home extends Component {
   }
 
   _onPress(){
-    this.props.popView();
+    this.props.popView(true);
   }
 
   render(){

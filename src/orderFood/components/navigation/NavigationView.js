@@ -29,31 +29,32 @@ class NavigationView extends Component {
       navState: RouterReducer({
         index: 0,
         key: 'OrderFood',
-        routes: [{key: OFNavigationType_login}]}, {})
+        routes: [{key: OFNavigationType_login}]}, {}),
+      animated:true
     }
   }
 
-  _pushView(OFNavigationType){
+  _pushView(OFNavigationType, animated){
     let prevNaviState = NaviState;
     this.props.pushView(OFNavigationType);
     if (prevNaviState !== NaviState) {
       this.setState({
-        navState:NaviState
+        navState:NaviState,
+        animated:animated === null?false:animated
       })
     }
-    return false;
   }
 
-  _popView()
+  _popView(animated)
   {
     let prevNaviState = NaviState;
     this.props.popView();
     if (prevNaviState !== NaviState) {
       this.setState({
-        navState:NaviState
+        navState:NaviState,
+        animated:animated === null?false:animated
       })
     }
-    return false;
   }
 
   _renderScene(props){
@@ -95,11 +96,20 @@ class NavigationView extends Component {
         navigationState={this.state.navState}
         renderScene={this._renderNavigationCard.bind(this)}
         applyAnimation={function(pos, navState){
-          Animated
-            .spring(pos, {toValue: navState.index, duration:200, bounciness: 0})
-            .start(function(){
-              this._navigationCompleted();
-            }.bind(this));
+          if (this.state.animated) {
+            Animated
+              .spring(pos, {toValue: navState.index, duration:200, bounciness: 0})
+              .start(function(){
+                this._navigationCompleted();
+              }.bind(this));
+          }else{
+            Animated
+              .timing(pos, {toValue: navState.index, duration:0, bounciness: 0})
+              .start(function(){
+                this._navigationCompleted();
+              }.bind(this));
+          }
+
         }.bind(this)}
        />
     )
