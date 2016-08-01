@@ -10,7 +10,9 @@ import {
   Image,
   TouchableHighlight,
   NavigationExperimental,
-  Dimensions
+  Dimensions,
+  NativeModules,
+  AsyncStorage
 } from 'react-native'
 
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
@@ -19,11 +21,55 @@ const itemWidth = Dimensions.get('window').width
 class Login extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      username:'',
+      password:'',
+      symbol:Symbol('isRequesting')
+    }
+  }
+
+  componentDidMount(){
+    this.refs.loginButton[this.state.symbol] = false;
+  }
+
+  async _requestLogin()
+  {
+    let loginButton = this.refs.loginButton;
+    if (loginButton[this.state.symbol] === true) {
+      console.log("正在请求");
+      return;
+    };
+    loginButton[this.state.symbol] = true;
+    let result = await fetch('https://oatest.camera360.com/orderfood/user/login?email=zhangzhi@camera360.com&password=April122014');
+    result.json().then(data => {
+      loginButton[this.state.symbol] = false;
+      if (data.status === 200) {
+        this.props.pushView(OFNavigationType_home);
+      }else{
+
+      }
+    });
   }
 
   _onPress(){
-    this.props.pushView(OFNavigationType_home, true);
+    // const {username, password} = this.state;
+    // if (username === '' || password === '') {
+    //   console.log("用户名或密码不能为空");
+    //   return false;
+    // }
+    // if (!username.includes('@') || username.startsWith('@') || username.endsWith('@')) {
+    //   console.log("邮箱格式不正确");
+    //   return false;
+    // }
+    this._requestLogin();
+  }
+
+  _userNameChange(text){
+    this.setState({username: text.trim()});
+  }
+
+  _passwordChange(text){
+    this.setState({password: text.trim()});
   }
 
   render(){
@@ -32,9 +78,13 @@ class Login extends Component {
         <Image source={require('../../assets/login_logo.png')} style={styles.backgroundImage} />
         <Text style={styles.title} >品果订餐系统</Text>
         <Text style={styles.loginText}>登录</Text>
-        <TextInput style={styles.userInput} returnKeyType="done" keyboardType="email-address" numberoflines="{1}" onChangeText={()=>{}} placeholder="QQ号/手机号/邮箱" underlinecolorandroid="{'transparent'}" />
-        <TextInput style={styles.passwordInput} returnKeyType="done" secureTextEntry={true} numberoflines="{1}" placeholder="密码" underlinecolorandroid="{'transparent'}" />
-        <Button onPress={this._onPress.bind(this)} title="登录" />
+        <TextInput style={styles.userInput} returnKeyType="done" keyboardType="email-address" numberoflines="{1}" onChangeText={this._userNameChange.bind(this)} placeholder="QQ号/手机号/邮箱" underlinecolorandroid="{'transparent'}" />
+        <TextInput style={styles.passwordInput} returnKeyType="done" secureTextEntry={true} numberoflines="{1}" onChangeText={this._passwordChange.bind(this)} placeholder="密码" underlinecolorandroid="{'transparent'}" />
+        <TouchableHighlight ref='loginButton'
+          style={{backgroundColor:'#eaeaea'}}
+          onPress={this._onPress.bind(this)}>
+            <Text style={styles.button}>登录</Text>
+        </TouchableHighlight>
       </View>
     )
   }
@@ -44,7 +94,7 @@ const Button = ({title, onPress}) => (
   <TouchableHighlight
     style={{backgroundColor:'#eaeaea'}}
     onPress={onPress}>
-      <Text style={styles.button}>{title}</Text>
+      <Text ref='loginButton' style={styles.button}>{title}</Text>
   </TouchableHighlight>
 )
 
@@ -89,7 +139,7 @@ const styles = StyleSheet.create({
     height:40,
     fontSize:12,
     backgroundColor:'white',
-    marginTop:5,
+    marginTop:3,
     textAlign:'center',
     alignSelf:'center'
   },
