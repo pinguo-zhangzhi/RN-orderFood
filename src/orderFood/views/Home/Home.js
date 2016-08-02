@@ -18,21 +18,34 @@ import {
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
 
 const Button = ({title, onPress}) => (
-  <TouchableHighlight
+  <TouchableOpacity
     underlayColor='#EFEFEF'
     onPress={onPress}
     style={styles.button}>
-      <Text>{title}</Text>
-  </TouchableHighlight>
+      <Text >{title}</Text>
+  </TouchableOpacity>
 )
 
-const WeekButton = ({title, onPress}) => (
-  <TouchableHighlight
-    underlayColor='#a52a2a'
+const WeekButton = ({title, onPress, isSelected}) => (
+  <TouchableOpacity
     onPress={onPress}
-    style={styles.weekDay}>
+    style={isSelected?styles.weekDaySelected:styles.weekDay}>
       <Text >{title}</Text>
-  </TouchableHighlight>
+  </TouchableOpacity>
+)
+
+const OrderView = ({viewImage, viewStyle, pulsePress,reduePress, title}) =>(
+  <View style = {viewStyle}>
+      <Image style={styles.foodStyle}  source={viewImage} />
+      <TouchableOpacity  onPress={reduePress}>
+           <Image style={styles.actionImage} source={require('../../assets/reduce_normal.png')} />
+      </TouchableOpacity>
+      <Text>0</Text>
+      <TouchableOpacity  onPress={pulsePress}>
+           <Image style={styles.actionImage} source={require('../../assets/plus_normal.png')}  />
+      </TouchableOpacity>
+      <Text>{title}</Text>
+  </View>
 )
 
 var BREAKFAST = 6;
@@ -43,59 +56,141 @@ class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      orderState:'breakfast'
+      orderState:'breakfast',
+      weekDayState:1
     }
   }
 
-  makeItems = (nItems: number, styles): Array<any> => {
+  makeChinaBFItems = (nItems: number, itemStyle): Array<any> => {
     var items = [];
-    for (var i = 0; i < nItems; i++) {
-       items[i] = (
-         <TouchableOpacity key={i} style={styles}>
-           <Text>{'Item ' + i}</Text>
-         </TouchableOpacity>
-        // <View key={i} style = {styles}>
-        //   <Text style={styles.weekStyle}>周一</Text>
-        //   <ScrollView style={styles.horizontalStyle} horizontal={true} showsHorizontalScrollIndicator={false}>
-        //     {this.makeInnerItems(7, [styles.itemWrapper, styles.horizontalItemWrapper])}
-        //   </ScrollView>
-        // </View>
-
-       );
-    }
+    items[0] = <OrderView viewImage={require('../../assets/mt.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='馒头'
+                          key={0}/>;
+    items[1] = <OrderView viewImage={require('../../assets/bz.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='包子'
+                          key={1}/>;
+    items[2] = <OrderView viewImage={require('../../assets/hj.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='花卷'
+                          key={2}/>;
+    items[3] = <OrderView viewImage={require('../../assets/jd.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='鸡蛋'
+                          key={3}/>;
+    items[4] = <OrderView viewImage={require('../../assets/dj.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='豆浆'
+                          key={4}/>;
     return items;
   }
 
-  makeInnerItems = (nItems:number, styles): Array<any> => {
+  makeWestBFItems = (nItems: number, itemStyle): Array<any> => {
     var items = [];
-    for (var i = 0; i < nItems; i++) {
-       items[i] = (
-         <TouchableOpacity key={i} style={styles}>
-           <Text>{'Item ' + i}</Text>
-         </TouchableOpacity>
-       );
-    }
+    items[0] = <OrderView viewImage={require('../../assets/nn.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='牛奶'
+                          key={0}/>;
+    items[1] = <OrderView viewImage={require('../../assets/yanmai.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='牛奶（加燕麦）'
+                          key={1}/>;
+    items[2] = <OrderView viewImage={require('../../assets/blas.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='布里奥斯'
+                          key={2}/>;
+    items[3] = <OrderView viewImage={require('../../assets/mym.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='蔓越莓面包'
+                          key={3}/>;
+    items[4] = <OrderView viewImage={require('../../assets/rs.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='肉松'
+                          key={4}/>;
+    items[5] = <OrderView viewImage={require('../../assets/rsf.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='瑞士风'
+                          key={5}/>;
+    items[6] = <OrderView viewImage={require('../../assets/smz.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title='三明治'
+                          key={6}/>;
+    return items;
+  }
+  makeDinnerItems = (title, itemStyle): Array<any> => {
+    var items = [];
+    items[0] = <OrderView viewImage={require('../../assets/wc.png')}
+                          viewStyle = {itemStyle}
+                          pulsePress={this._onPressPlus.bind(this)}
+                          reduePress={this._onPressReduce.bind(this)}
+                          title={title}
+                          key={0}/>;
     return items;
   }
 
+  _onPressPlus(){
+    console.log('press plus');
+  }
+  _onPressReduce(){
+    console.log('press plus');
+  }
   _onPressDinner(){
     this.setState({orderState:'dinner'});
   }
   _onPressMidDinner(){
-    this.setState({orderState:'dinner'});
+    this.setState({orderState:'midDinner'});
   }
   _onPressBreakfast(){
     this.setState({orderState:'breakfast'});
+  }
+  _onPressWeekDay(pressDay){
+    this.setState({weekDayState:pressDay});
   }
   render() {
     var items;
     if (this.state.orderState == 'breakfast')
     {
-        items = this.makeItems(BREAKFAST, styles.orderItem);
+        if (this.state.weekDayState%2 == 0)
+        {
+          items = this.makeChinaBFItems(BREAKFAST, styles.orderItem);
+        }
+        else {
+          items = this.makeWestBFItems(BREAKFAST, styles.orderItem);
+        }
     }
     else
     {
-        items = this.makeItems(DINNER, styles.orderItem);
+        if (this.state.orderState == 'midDinner') {
+          items = this.makeDinnerItems('午餐', styles.orderItem);
+        }else {
+          items = this.makeDinnerItems('晚餐', styles.orderItem);
+        }
+
     }
     var verticalScrollView = (
       <View style={styles.container}>
@@ -106,13 +201,13 @@ class Home extends Component {
         </View>
         <View style={styles.orderContainer}>
           <View style={styles.weekContainer}>
-              <WeekButton onPress={this._onPressBreakfast.bind(this)} title='周一'/>
-              <WeekButton onPress={this._onPressMidDinner.bind(this)} title='周二'/>
-              <WeekButton onPress={this._onPressDinner.bind(this)} title='周三'/>
-              <WeekButton onPress={this._onPressDinner.bind(this)} title='周四'/>
-              <WeekButton onPress={this._onPressDinner.bind(this)} title='周五'/>
-              <WeekButton onPress={this._onPressDinner.bind(this)}  title='周六'/>
-              <WeekButton onPress={this._onPressDinner.bind(this)} title='周日'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,1)} isSelected={1===this.state.weekDayState} title='周一'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,2)} isSelected={2===this.state.weekDayState} title='周二'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,3)} isSelected={3===this.state.weekDayState} title='周三'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,4)} isSelected={4===this.state.weekDayState} title='周四'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,5)} isSelected={5===this.state.weekDayState} title='周五'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,6)} isSelected={6===this.state.weekDayState} title='周六'/>
+              <WeekButton onPress={this._onPressWeekDay.bind(this,7)} isSelected={7===this.state.weekDayState} title='周日'/>
           </View>
           <ScrollView style={styles.verticalScrollView}>
             {items}
@@ -134,11 +229,12 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: '#eaeaea'
   },
   stateContainer:{
     height:50,
     margin:2,
+    marginTop:10,
     flexDirection:'row'
   },
   button: {
@@ -147,29 +243,22 @@ const styles = StyleSheet.create({
     margin:5,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EDEDED'
+    backgroundColor: '#bdbdbd'
   },
   verticalScrollView: {
-    marginTop: 10,
-    marginLeft:5,
-    marginRight:5,
-    flex:1
+    marginTop:15
   },
   orderItem: {
-    height:100,
+    flex:1,
     flexDirection:'row',
-    flexWrap:'wrap',
-    backgroundColor: '#dddddd',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    borderRadius: 2,
-    borderWidth: 1,
-    borderColor: '#a52a2a',
-    padding: 30,
     margin: 5,
+    height:65
   },
   orderContainer:{
     flexDirection:'row',
-    marginTop:10
+    marginTop:10,
   },
   weekContainer:{
     width:65,
@@ -181,13 +270,29 @@ const styles = StyleSheet.create({
     height:50,
     borderRadius:25,
     borderWidth:1,
-    borderColor:'#a52a2a',
+    borderColor:'#da5046',
     justifyContent:'center',
     alignItems: 'center',
     backgroundColor:'#fff'
   },
   weekDaySelected:{
-    backgroundColor:'#a52a2a'
+    margin:5,
+    width:50,
+    height:50,
+    borderRadius:25,
+    borderWidth:1,
+    borderColor:'#da5046',
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:'#da5046'
+  },
+  foodStyle:{
+    width:60,
+    height:60,
+  },
+  actionImage:{
+    marginLeft:10,
+    marginRight:10
   }
 
 })
