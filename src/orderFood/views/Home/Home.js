@@ -15,7 +15,7 @@ import {
   NavigationExperimental
 } from 'react-native'
 
-import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list,OFNavigationType_orderBreakfast} from '../../components/appRouter/RouterAction'
+import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
 
 const Button = ({title, onPress}) => (
   <TouchableHighlight
@@ -26,53 +26,105 @@ const Button = ({title, onPress}) => (
   </TouchableHighlight>
 )
 
-var NUM_ITEMS = 3;
+const WeekButton = ({title, onPress}) => (
+  <TouchableHighlight
+    underlayColor='#a52a2a'
+    onPress={onPress}
+    style={styles.weekDay}>
+      <Text >{title}</Text>
+  </TouchableHighlight>
+)
+
+var BREAKFAST = 6;
+var DINNER = 1;
 
 class Home extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      orderState:'breakfast'
+    }
+  }
+
   makeItems = (nItems: number, styles): Array<any> => {
     var items = [];
-    items[0] = (
-      <Button onPress={this._onPressBreakfast.bind(this)} title="预定早餐" key= {0}/>
-    );
-    items[1] = (
-      <Button onPress={this._onPress.bind(this)} title="预定午餐"  key= {1}/>
-    );
-    items[2] = (
-      <Button onPress={this._onPress.bind(this)} title="预定晚餐"  key= {2}/>
-    );
-    items[3] = (
-      <Button onPress={this._onPress.bind(this)} title="我的订单"  key= {3}/>
-    );
+    for (var i = 0; i < nItems; i++) {
+       items[i] = (
+         <TouchableOpacity key={i} style={styles}>
+           <Text>{'Item ' + i}</Text>
+         </TouchableOpacity>
+        // <View key={i} style = {styles}>
+        //   <Text style={styles.weekStyle}>周一</Text>
+        //   <ScrollView style={styles.horizontalStyle} horizontal={true} showsHorizontalScrollIndicator={false}>
+        //     {this.makeInnerItems(7, [styles.itemWrapper, styles.horizontalItemWrapper])}
+        //   </ScrollView>
+        // </View>
+
+       );
+    }
     return items;
-  };
-  _onPress(){
-    this.props.popView(true);
+  }
+
+  makeInnerItems = (nItems:number, styles): Array<any> => {
+    var items = [];
+    for (var i = 0; i < nItems; i++) {
+       items[i] = (
+         <TouchableOpacity key={i} style={styles}>
+           <Text>{'Item ' + i}</Text>
+         </TouchableOpacity>
+       );
+    }
+    return items;
+  }
+
+  _onPressDinner(){
+    this.setState({orderState:'dinner'});
+  }
+  _onPressMidDinner(){
+    this.setState({orderState:'dinner'});
   }
   _onPressBreakfast(){
-    this.props.pushView(OFNavigationType_orderBreakfast, true);
+    this.setState({orderState:'breakfast'});
   }
   render() {
-    // One of the items is a horizontal scroll view
-    var items = this.makeItems(NUM_ITEMS, styles.itemWrapper);
-    // items[4] = (
-    //   <ScrollView key={'scrollView'} horizontal={true}>
-    //     {this.makeItems(NUM_ITEMS, [styles.itemWrapper, styles.horizontalItemWrapper])}
-    //   </ScrollView>
-    // );
-
+    var items;
+    if (this.state.orderState == 'breakfast')
+    {
+        items = this.makeItems(BREAKFAST, styles.orderItem);
+    }
+    else
+    {
+        items = this.makeItems(DINNER, styles.orderItem);
+    }
     var verticalScrollView = (
       <View style={styles.container}>
-        <Image resizeMode={Image.resizeMode.cover} style={styles.logo} source={require('./logo.png')}></Image>
-        <Text style={styles.welcomeText}>马剑光，欢迎使用订餐系统</Text>
-        <ScrollView style={styles.verticalScrollView}>
-          {items}
-        </ScrollView>
+        <View style={styles.stateContainer}>
+            <Button onPress={this._onPressBreakfast.bind(this)} title="早餐点餐" key= {0} />
+            <Button onPress={this._onPressMidDinner.bind(this)} title="午餐点餐"  key= {1}/>
+            <Button onPress={this._onPressDinner.bind(this)} title="晚餐点餐"  key= {2}/>
+        </View>
+        <View style={styles.orderContainer}>
+          <View style={styles.weekContainer}>
+              <WeekButton onPress={this._onPressBreakfast.bind(this)} title='周一'/>
+              <WeekButton onPress={this._onPressMidDinner.bind(this)} title='周二'/>
+              <WeekButton onPress={this._onPressDinner.bind(this)} title='周三'/>
+              <WeekButton onPress={this._onPressDinner.bind(this)} title='周四'/>
+              <WeekButton onPress={this._onPressDinner.bind(this)} title='周五'/>
+              <WeekButton onPress={this._onPressDinner.bind(this)}  title='周六'/>
+              <WeekButton onPress={this._onPressDinner.bind(this)} title='周日'/>
+          </View>
+          <ScrollView style={styles.verticalScrollView}>
+            {items}
+          </ScrollView>
+        </View>
+
       </View>
 
     );
 
     return verticalScrollView;
+
   }
 }
 
@@ -84,37 +136,58 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
-  logo:{
-    margin:0
-  },
-  welcomeText:{
-    fontSize:20,
-    color:'black',
-    textAlign:'center'
+  stateContainer:{
+    height:50,
+    margin:2,
+    flexDirection:'row'
   },
   button: {
     height: 50,
-    marginTop: 10,
+    flex:3,
+    margin:5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 20,
-    marginRight: 20,
     backgroundColor: '#EDEDED'
   },
-
   verticalScrollView: {
-      margin: 10,
+    marginTop: 10,
+    marginLeft:5,
+    marginRight:5,
+    flex:1
   },
-  itemWrapper: {
-      backgroundColor: '#dddddd',
-      alignItems: 'center',
-      borderRadius: 5,
-      borderWidth: 5,
-      borderColor: '#a52a2a',
-      padding: 30,
-      margin: 5,
+  orderItem: {
+    height:100,
+    flexDirection:'row',
+    flexWrap:'wrap',
+    backgroundColor: '#dddddd',
+    alignItems: 'center',
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: '#a52a2a',
+    padding: 30,
+    margin: 5,
   },
-  horizontalItemWrapper: {
-      padding: 50
-    }
+  orderContainer:{
+    flexDirection:'row',
+    marginTop:10
+  },
+  weekContainer:{
+    width:65,
+    marginTop:10
+  },
+  weekDay:{
+    margin:5,
+    width:50,
+    height:50,
+    borderRadius:25,
+    borderWidth:1,
+    borderColor:'#a52a2a',
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:'#fff'
+  },
+  weekDaySelected:{
+    backgroundColor:'#a52a2a'
+  }
+
 })

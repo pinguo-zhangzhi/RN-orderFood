@@ -12,11 +12,10 @@ import {
   NavigationExperimental as Navigation
 } from 'react-native'
 
-import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list, OFNavigationType_orderBreakfast, NaviState} from '../appRouter/RouterAction'
+import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list, NaviState} from '../appRouter/RouterAction'
 import RouterReducer from '../appRouter/RouterAction'
 import Login from '../../views/Login/Login'
 import Home from '../../views/Home/Home'
-import SelectDays from '../../views/orderBreakfast/selectDays'
 
 const {
  CardStack: NavigationCardStack,
@@ -70,9 +69,6 @@ class NavigationView extends Component {
       case prevKey+OFNavigationType_list:
 
         break;
-      case prevKey+OFNavigationType_orderBreakfast:
-          return (<SelectDays  popView={this._popView.bind(this)} pushView={this._pushView.bind(this)} />)
-          break;
       default:
         return (<View />);
     }
