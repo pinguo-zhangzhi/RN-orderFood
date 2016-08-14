@@ -1,0 +1,710 @@
+{
+    "data": [
+        {
+            "id": "7",
+            "weekDay": "7",
+            "status": "1",
+            "day": 1471104000,
+            "currentDay": 20160814,
+            "breakfastBuyStatus": 1,
+            "dinnerBuyStatus": 1,
+            "lunchBuyStatus": 1,
+            "category": 2,
+            "foodsBreakfastStatus": 0,
+            "foodsLunchStatus": 0,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 0,
+            "dinnerDisplay": 1,
+            "lunchDisplay": 0,
+            "food": [
+                {
+                    "foodId": "13",
+                    "foodName": "牛奶",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "16",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "20",
+                    "foodName": "牛奶（加燕麦）",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "17",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "26",
+                    "foodName": "布里奥斯",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "37",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "27",
+                    "foodName": "蔓越莓面包",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "38",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "28",
+                    "foodName": "肉松",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "39",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "29",
+                    "foodName": "瑞士风",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "40",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "30",
+                    "foodName": "三明治",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "41",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": 0
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "weekDay": "1",
+            "status": "1",
+            "day": 1471190400,
+            "currentDay": 20160815,
+            "breakfastBuyStatus": 1,
+            "dinnerBuyStatus": 0,
+            "lunchBuyStatus": 1,
+            "category": 2,
+            "foodsBreakfastStatus": 0,
+            "foodsLunchStatus": 1,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 0,
+            "dinnerDisplay": 0,
+            "lunchDisplay": 1,
+            "food": [
+                {
+                    "foodId": "13",
+                    "foodName": "牛奶",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "16",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "20",
+                    "foodName": "牛奶（加燕麦）",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "17",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "26",
+                    "foodName": "布里奥斯",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "37",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "27",
+                    "foodName": "蔓越莓面包",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "38",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "28",
+                    "foodName": "肉松",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "39",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "29",
+                    "foodName": "瑞士风",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "40",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "30",
+                    "foodName": "三明治",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "41",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": "1"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "weekDay": "2",
+            "status": "1",
+            "day": 1471276800,
+            "currentDay": 20160816,
+            "breakfastBuyStatus": 0,
+            "dinnerBuyStatus": 0,
+            "lunchBuyStatus": 1,
+            "category": 1,
+            "foodsBreakfastStatus": 1,
+            "foodsLunchStatus": 1,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 0,
+            "dinnerDisplay": 0,
+            "lunchDisplay": 1,
+            "food": [
+                {
+                    "foodId": "9",
+                    "foodName": "馒头",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "9",
+                    "status": "0",
+                    "num": "1"
+                },
+                {
+                    "foodId": "10",
+                    "foodName": "鸡蛋",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "10",
+                    "status": "0",
+                    "num": "1"
+                },
+                {
+                    "foodId": "11",
+                    "foodName": "豆浆",
+                    "type": "1",
+                    "category": "2",
+                    "property": "2",
+                    "sort": "11",
+                    "status": "0",
+                    "num": "1"
+                },
+                {
+                    "foodId": "18",
+                    "foodName": "大葱猪肉包",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "15",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "23",
+                    "foodName": "香葱椒盐花卷",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "20",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": "1"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "weekDay": "3",
+            "status": "1",
+            "day": 1471363200,
+            "currentDay": 20160817,
+            "breakfastBuyStatus": 1,
+            "dinnerBuyStatus": 0,
+            "lunchBuyStatus": 1,
+            "category": 2,
+            "foodsBreakfastStatus": 1,
+            "foodsLunchStatus": 1,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 1,
+            "dinnerDisplay": 0,
+            "lunchDisplay": 1,
+            "food": [
+                {
+                    "foodId": "13",
+                    "foodName": "牛奶",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "16",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "20",
+                    "foodName": "牛奶（加燕麦）",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "17",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "26",
+                    "foodName": "布里奥斯",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "37",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "27",
+                    "foodName": "蔓越莓面包",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "38",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "28",
+                    "foodName": "肉松",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "39",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "29",
+                    "foodName": "瑞士风",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "40",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "30",
+                    "foodName": "三明治",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "41",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": "1"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "weekDay": "4",
+            "status": "1",
+            "day": 1471449600,
+            "currentDay": 20160818,
+            "breakfastBuyStatus": 0,
+            "dinnerBuyStatus": 0,
+            "lunchBuyStatus": 1,
+            "category": 1,
+            "foodsBreakfastStatus": 1,
+            "foodsLunchStatus": 1,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 0,
+            "dinnerDisplay": 0,
+            "lunchDisplay": 1,
+            "food": [
+                {
+                    "foodId": "9",
+                    "foodName": "馒头",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "9",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "10",
+                    "foodName": "鸡蛋",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "10",
+                    "status": "0",
+                    "num": "1"
+                },
+                {
+                    "foodId": "11",
+                    "foodName": "豆浆",
+                    "type": "1",
+                    "category": "2",
+                    "property": "2",
+                    "sort": "11",
+                    "status": "0",
+                    "num": "1"
+                },
+                {
+                    "foodId": "18",
+                    "foodName": "大葱猪肉包",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "15",
+                    "status": "0",
+                    "num": "1"
+                },
+                {
+                    "foodId": "23",
+                    "foodName": "香葱椒盐花卷",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "20",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": "1"
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "weekDay": "5",
+            "status": "1",
+            "day": 1471536000,
+            "currentDay": 20160819,
+            "breakfastBuyStatus": 1,
+            "dinnerBuyStatus": 1,
+            "lunchBuyStatus": 1,
+            "category": 2,
+            "foodsBreakfastStatus": 1,
+            "foodsLunchStatus": 1,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 1,
+            "dinnerDisplay": 1,
+            "lunchDisplay": 1,
+            "food": [
+                {
+                    "foodId": "13",
+                    "foodName": "牛奶",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "16",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "20",
+                    "foodName": "牛奶（加燕麦）",
+                    "type": "1",
+                    "category": "1",
+                    "property": "2",
+                    "sort": "17",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "26",
+                    "foodName": "布里奥斯",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "37",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "27",
+                    "foodName": "蔓越莓面包",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "38",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "28",
+                    "foodName": "肉松",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "39",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "29",
+                    "foodName": "瑞士风",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "40",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "30",
+                    "foodName": "三明治",
+                    "type": "1",
+                    "category": "1",
+                    "property": "1",
+                    "sort": "41",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": 0
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "weekDay": "6",
+            "status": "1",
+            "day": 1471622400,
+            "currentDay": 20160820,
+            "breakfastBuyStatus": 1,
+            "dinnerBuyStatus": 1,
+            "lunchBuyStatus": 1,
+            "category": 1,
+            "foodsBreakfastStatus": 1,
+            "foodsLunchStatus": 1,
+            "foodsDinnerStatus": 1,
+            "breakfastDisplay": 1,
+            "dinnerDisplay": 1,
+            "lunchDisplay": 1,
+            "food": [
+                {
+                    "foodId": "9",
+                    "foodName": "馒头",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "9",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "10",
+                    "foodName": "鸡蛋",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "10",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "11",
+                    "foodName": "豆浆",
+                    "type": "1",
+                    "category": "2",
+                    "property": "2",
+                    "sort": "11",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "18",
+                    "foodName": "大葱猪肉包",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "15",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "23",
+                    "foodName": "香葱椒盐花卷",
+                    "type": "1",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "20",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "31",
+                    "foodName": "午餐",
+                    "type": "3",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "42",
+                    "status": "0",
+                    "num": 0
+                },
+                {
+                    "foodId": "14",
+                    "foodName": "晚餐",
+                    "type": "2",
+                    "category": "2",
+                    "property": "1",
+                    "sort": "43",
+                    "status": "0",
+                    "num": 0
+                }
+            ]
+        }
+    ],
+    "status": 200,
+    "message": "ok",
+    "serverTime": 1471150808.9014
+}

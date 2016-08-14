@@ -1,0 +1,153 @@
+{
+    "data": {
+        "25": [
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470471186",
+                "DAY": "20160808",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470471183",
+                "DAY": "20160809",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470471180",
+                "DAY": "20160810",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470467045",
+                "DAY": "20160811",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470733989",
+                "DAY": "20160815",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "鸡蛋",
+                "foodId": "10",
+                "type": "1",
+                "createTime": "1470966390",
+                "DAY": "20160816",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470895302",
+                "DAY": "20160816",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "豆浆",
+                "foodId": "11",
+                "type": "1",
+                "createTime": "1470966390",
+                "DAY": "20160816",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "馒头",
+                "foodId": "9",
+                "type": "1",
+                "createTime": "1470966390",
+                "DAY": "20160816",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "三明治",
+                "foodId": "30",
+                "type": "1",
+                "createTime": "1470966397",
+                "DAY": "20160817",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "晚餐",
+                "foodId": "14",
+                "type": "2",
+                "createTime": "1470895305",
+                "DAY": "20160817",
+                "foodNum": "1"
+            },
+            {
+                "email": "majianguang@camera360.com",
+                "nickname": "马剑光",
+                "groupName": "想拍就拍",
+                "groupId": "25",
+                "foodName": "牛奶（加燕麦）",
+                "foodId": "20",
+                "type": "1",
+                "createTime": "1470966397",
+                "DAY": "20160817",
+                "foodNum": "1"
+            }
+        ]
+    },
+    "status": 200,
+    "message": "ok",
+    "serverTime": 1470966405.4604
+}
