@@ -95,7 +95,7 @@ class Home extends Component {
             <Image style={styles.foodImage} source={foodImageSource} />
             <Text style={styles.foodName}>{nItems[i].foodNum > 1 ? nItems[i].foodName+"*"+nItems[i].foodNum : nItems[i].foodName}</Text>
           </View>
-          <WeekButton onPress={this._onPressWeekDay.bind(this,1)} isSelected={1===this.state.weekDayState} title='周一'/>
+          // <WeekButton onPress={this._onPressWeekDay.bind(this,1)} isSelected={1===this.state.weekDayState} title='周一'/>
         );
     }
     return weekItems;
@@ -111,7 +111,7 @@ class Home extends Component {
             <Button onPress={this._onPressDinner.bind(this)} isSelected={'dinner'===this.state.orderState} title="晚餐点餐"  key= {2}/>
             <Button onPress={this._onPressMyOrder.bind(this)} isSelected={'myOrder'===this.state.orderState} title="我的订单"  key= {4}/>
         </View>
-        
+
       </View>
 
     );
