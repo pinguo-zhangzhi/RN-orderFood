@@ -194,7 +194,9 @@ const styles = StyleSheet.create({
   //////星期样式
   weekContainer:{
     flex:2,
-    backgroundColor:'yellow'
+    backgroundColor:'white',
+    borderRightWidth:1,
+    borderColor:'#dfe0e1'
   },
   weekDay:{
     margin:5,
@@ -226,7 +228,7 @@ const styles = StyleSheet.create({
   foodListContainer: {
     flex:9,
     // paddingLeft:5,
-    backgroundColor:'blue'
+    backgroundColor:'white'
   },
   orderItem: {
     flexDirection:'row',

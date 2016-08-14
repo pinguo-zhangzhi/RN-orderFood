@@ -82,7 +82,7 @@ export function getBreakfastFoodByWeek(totalArray,weekDay){
     {
         return;
     }
-    for (var i = 0; i < item.food.length - 1; i++)
+    for (var i = 0; i <= item.food.length - 1; i++)
     {
       var itemFood = item.food[i];
       if (itemFood.type == 1)
@@ -102,7 +102,7 @@ export function getLunchFoodByWeek(totalArray,weekDay){
     {
         return;
     }
-    for (var i = 0; i < item.food.length - 1; i++)
+    for (var i = 0; i <= item.food.length - 1; i++)
     {
       var itemFood = item.food[i];
       if (itemFood.type == 3)
@@ -122,7 +122,7 @@ export function getDinnerFoodByWeek(totalArray,weekDay){
     {
         return;
     }
-    for (var i = 0; i < item.food.length - 1; i++)
+    for (var i = 0; i <= item.food.length - 1; i++)
     {
       var itemFood = item.food[i];
       if (itemFood.type == 2)
