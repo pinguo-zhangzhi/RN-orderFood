@@ -16,6 +16,7 @@ import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list, Na
 import RouterReducer from '../appRouter/RouterAction'
 import Login from '../../views/Login/Login'
 import Home from '../../views/Home/Home'
+import List from '../../views/orderList/orderList'
 
 const {
  CardStack: NavigationCardStack,
@@ -64,10 +65,10 @@ class NavigationView extends Component {
           return (<Login pushView={this._pushView.bind(this)} />);
         break;
       case prevKey+OFNavigationType_home:
-          return (<Home popView={this._popView.bind(this)} />);
+          return (<Home popView={this._popView.bind(this)} pushView={this._pushView.bind(this)} />);
         break;
       case prevKey+OFNavigationType_list:
-
+          return (<List popView={this._popView.bind(this)} pushView={this._pushView.bind(this)} />);
         break;
       default:
         return (<View />);

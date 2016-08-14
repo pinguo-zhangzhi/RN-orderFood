@@ -20,7 +20,6 @@ export const OFNavigationType_login = "OFNavigationType_login";
 export const OFNavigationType_home = "OFNavigationType_home";
 export const OFNavigationType_list = "OFNavigationType_list";
 
-
 export function RouteToView(type){
   var obj = {
     type:'push',

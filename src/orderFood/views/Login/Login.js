@@ -34,6 +34,7 @@ class Login extends Component {
 
   async _requestLogin()
   {
+    this.props.pushView(OFNavigationType_home,true); return;
     let loginButton = this.refs.loginButton;
     if (loginButton[this.state.symbol] === true) {
       console.log("正在请求");
