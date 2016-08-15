@@ -37,17 +37,26 @@ const WeekButton = ({title, onPress, isSelected}) => (
   </TouchableOpacity>
 )
 
-const OrderView = ({viewImage, viewStyle, pulsePress,reduePress, title, countNum}) =>(
+const OrderButton = ({title, onPress}) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={styles.orderBtnStyle}>
+      <Text style={styles.orderBtnText}>{title}</Text>
+  </TouchableOpacity>
+)
+
+const OrderView = ({viewImage, viewStyle,selectedState, plusePress,pluseImage,reduePress,reduceImage, title, countNum}) =>(
   <View style = {viewStyle}>
       <Image style={styles.foodStyle}  source={viewImage} />
+      <Image style={selectedState?styles.seletedStyle:styles.unseletedStyle}  source={require('../../assets/selected_mask.png')} />
+      <TouchableOpacity  onPress={plusePress}>
+           <Image style={styles.actionImage} source={reduceImage}  />
+      </TouchableOpacity>
+      <Text style = {styles.orderCountText}>{countNum}</Text>
       <TouchableOpacity  onPress={reduePress}>
-           <Image style={styles.actionImage} source={require('../../assets/reduce_normal.png')} />
+           <Image style={styles.actionImage} source={pluseImage} />
       </TouchableOpacity>
-      <Text>{countNum}</Text>
-      <TouchableOpacity  onPress={pulsePress}>
-           <Image style={styles.actionImage} source={require('../../assets/plus_normal.png')}  />
-      </TouchableOpacity>
-      <Text>{title}</Text>
+      <Text style = {styles.orderFoodNameText}>{title}</Text>
   </View>
 )
 
@@ -87,6 +96,9 @@ class Home extends Component {
   _onPressReduce(foodId){
 
   }
+  _onPressOrderBtn(){
+
+  }
 
   ////////makeItemsHandler////////
   _makeWeekDayItems(){
@@ -108,22 +120,39 @@ class Home extends Component {
     var weekItems = HomeUtils.getWeekDaysByType(this.state.totalArray,this.state.orderState);
     var currentSelectedWeek = this.state.selectedWeekDay > 7 ? weekItems[0].weekDay : this.state.selectedWeekDay;
 
-    var foodItems = HomeUtils.getFoodByTypeAndWeek(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+    var foodItemInfo = HomeUtils.getFoodByTypeAndWeek(this.state.totalArray,this.state.orderState,currentSelectedWeek);
     var viewItems = [];
-    for (var i = 0; i < foodItems.length; i++) {
-      var itemData = foodItems[i];
+    for (var i = 0; i < foodItemInfo.foodItems.length; i++) {
+      var itemData = foodItemInfo.foodItems[i];
       var foodImageSource = CommonUtils.getFoodNameByName(itemData.foodName);
+      var foodPluseImageSource = HomeUtils.getPluseImageByStatus(foodItemInfo,this.state.orderState);
+      var foodReduceImageSource = HomeUtils.getReduceImageByStatus(foodItemInfo,this.state.orderState);
         viewItems[i] = (
           <OrderView viewImage={foodImageSource}
                      viewStyle = {styles.orderItem}
-                     pulsePress={this._onPressPlus.bind(this,itemData.foodId)}
+                     selectedState={itemData.num >0 ? true : false}
+                     plusePress={this._onPressPlus.bind(this,itemData.foodId)}
+                     pluseImage={foodPluseImageSource}
                      reduePress={this._onPressReduce.bind(this,itemData.foodId)}
+                     reduceImage={foodReduceImageSource}
                      title={itemData.foodName}
-                     countNum={0}
+                     countNum={itemData.num}
                      key={'foodname-key-'+i}/>
         );
     }
     return viewItems;
+  }
+
+  _makeOrderBtn(){
+    var weekItems = HomeUtils.getWeekDaysByType(this.state.totalArray,this.state.orderState);
+    var currentSelectedWeek = this.state.selectedWeekDay > 7 ? weekItems[0].weekDay : this.state.selectedWeekDay;
+
+    var foodItemInfo = HomeUtils.getFoodByTypeAndWeek(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+
+    var canOrderFood = HomeUtils.getCanOrderStatus(foodItemInfo,this.state.orderState);
+    var btnTitle = canOrderFood? '提交'+CommonUtils.dateToChina(parseInt(currentSelectedWeek))+'订餐' : '取消'+CommonUtils.dateToChina(parseInt(currentSelectedWeek))+'订餐'
+    var item = (<OrderButton onPress={this._onPressOrderBtn.bind(this)} title={btnTitle}  key= {0}/>);
+    return item;
   }
 
   render() {
@@ -144,7 +173,9 @@ class Home extends Component {
                 {this._makeFoodItems()}
             </ScrollView>
         </View>
-
+        <View style={styles.orderBtnContainer}>
+            {this._makeOrderBtn()}
+        </View>
       </View>
 
     );
@@ -189,7 +220,7 @@ const styles = StyleSheet.create({
   // //////////////////////以下是星期和选择食物的样式
   orderContainer:{
     flexDirection:'row',
-    flex:998
+    flex:996
   },
   //////星期样式
   weekContainer:{
@@ -239,6 +270,49 @@ const styles = StyleSheet.create({
   foodStyle:{
     width:50,
     height:50
+  },
+  unseletedStyle:{
+    width:0,
+    height:0,
+    position:'absolute',
+    left:0,
+    top:0
+  },
+  seletedStyle:{
+    width:50,
+    height:50,
+    position:'absolute',
+    left:0,
+    top:0
+  },
+  actionImage:{
+    marginLeft:6,
+    marginRight:6
+  },
+  orderCountText:{
+    fontSize:13,
+    marginLeft:6,
+    marginRight:6
+  },
+  orderFoodNameText:{
+    fontSize:13,
+    marginLeft:6
+  },
+  //////////////订单按钮样式
+  orderBtnContainer:{
+    flex:2,
+    height:50
+  },
+  orderBtnStyle:{
+    height: 50,
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#55bf79'
+  },
+  orderBtnText:{
+    fontSize:14,
+    color:'white'
   }
 });
 

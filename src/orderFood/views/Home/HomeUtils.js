@@ -62,26 +62,28 @@ export function getDinnerWeekDay(totalArray){
   return items;
 }
 export function getFoodByTypeAndWeek(totalArray,type:String,weekDay){
-  var items;
+  var itemInfo;
   if (type == 'breakfast') {
-    items = getBreakfastFoodByWeek(totalArray,weekDay);
+    itemInfo = getBreakfastFoodByWeek(totalArray,weekDay);
   }
   else if (type == 'lunch') {
-    items = getLunchFoodByWeek(totalArray,weekDay);
+    itemInfo = getLunchFoodByWeek(totalArray,weekDay);
   }
   else if(type == 'dinner') {
-    items = getDinnerFoodByWeek(totalArray,weekDay);
+    itemInfo = getDinnerFoodByWeek(totalArray,weekDay);
   }
-  return items;
+  return itemInfo;
 }
 
 export function getBreakfastFoodByWeek(totalArray,weekDay){
+  var itemInfo;
   var foodItems = [];
   totalArray.forEach(function(item, index) {
     if (item.foodsBreakfastStatus == 0 || item.weekDay != weekDay)
     {
         return;
     }
+    itemInfo = item;
     for (var i = 0; i <= item.food.length - 1; i++)
     {
       var itemFood = item.food[i];
@@ -92,16 +94,19 @@ export function getBreakfastFoodByWeek(totalArray,weekDay){
     };
 
   });
-  return foodItems;
+  itemInfo.foodItems = foodItems;
+  return itemInfo;
 }
 
 export function getLunchFoodByWeek(totalArray,weekDay){
+  var itemInfo;
   var foodItems = [];
   totalArray.forEach(function(item, index) {
     if (item.foodsLunchStatus == 0 || item.weekDay != weekDay)
     {
         return;
     }
+    itemInfo = item;
     for (var i = 0; i <= item.food.length - 1; i++)
     {
       var itemFood = item.food[i];
@@ -112,16 +117,19 @@ export function getLunchFoodByWeek(totalArray,weekDay){
     };
 
   });
-  return foodItems;
+  itemInfo.foodItems = foodItems;
+  return itemInfo;
 }
 
 export function getDinnerFoodByWeek(totalArray,weekDay){
+  var itemInfo;
   var foodItems = [];
   totalArray.forEach(function(item, index) {
     if (item.status == 0 || item.foodsDinnerStatus == 0 || item.weekDay != weekDay)
     {
         return;
     }
+    itemInfo = item;
     for (var i = 0; i <= item.food.length - 1; i++)
     {
       var itemFood = item.food[i];
@@ -132,5 +140,62 @@ export function getDinnerFoodByWeek(totalArray,weekDay){
     };
 
   });
-  return foodItems;
+  itemInfo.foodItems = foodItems;
+  return itemInfo;
+}
+
+export function getPluseImageByStatus(itemInfo,type) {
+  var disableClick;
+  if (type == 'breakfast') {
+    disableClick = !itemInfo.breakfastBuyStatus || !itemInfo.foodsBreakfastStatus;
+  }
+  else if (type == 'lunch') {
+    disableClick = !itemInfo.lunchBuyStatus || !itemInfo.foodsLunchStatus;
+  }
+  else if(type == 'dinner') {
+    disableClick = !itemInfo.dinnerBuyStatus || !itemInfo.foodsDinnerStatus;
+  }
+
+  if (disableClick) {
+    return require('../../assets/plus_disable.png')
+  }
+  return require('../../assets/plus_normal.png');
+}
+
+export function getReduceImageByStatus(itemInfo,type) {
+  var disableClick;
+  if (type == 'breakfast') {
+    disableClick = !itemInfo.breakfastBuyStatus || !itemInfo.foodsBreakfastStatus;
+  }
+  else if (type == 'lunch') {
+    disableClick = !itemInfo.lunchBuyStatus || !itemInfo.foodsLunchStatus;
+  }
+  else if(type == 'dinner') {
+    disableClick = !itemInfo.dinnerBuyStatus || !itemInfo.foodsDinnerStatus;
+  }
+  if (disableClick) {
+    return require('../../assets/reduce_disable.png')
+  }
+  return require('../../assets/reduce_normal.png');
+}
+
+export function getSelectedByStatus(item) {
+  if (item.num > 0) {
+    return true
+  }
+  return false;
+}
+
+export function getCanOrderStatus(item,type) {
+  var disableClick;
+  if (type == 'breakfast') {
+    disableClick = !item.breakfastBuyStatus ? false : true;
+  }
+  else if (type == 'lunch') {
+    disableClick = !item.lunchBuyStatus ? false : true;
+  }
+  else if(type == 'dinner') {
+    disableClick = !item.dinnerBuyStatus ? false : true;
+  }
+  return disableClick;
 }
