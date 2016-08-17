@@ -25,7 +25,7 @@ export function getFoodList(data) {
     return dayList;
 }
 
-function dateToChina(date){
+export function dateToChina(date){
 		switch(date){
 			case 1:
 				return '周一';
@@ -65,9 +65,11 @@ export function getFoodNameByName(name){
       return require('../assets/mt.png');
       break;
     case '包子':
+    case '大葱猪肉包':
       return require('../assets/bz.png');
       break;
     case '花卷':
+    case '香葱椒盐花卷':
       return require('../assets/hj.png');
       break;
     case '豆浆':

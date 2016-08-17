@@ -18,6 +18,11 @@ import {
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
 const itemWidth = Dimensions.get('window').width
 
+var Storage_UserId_Key = 'Storage_UserId_Key';
+var Storage_UserEmail_Key = 'Storage_UserEmail_Key';
+var Storage_PushToken_Key = 'Storage_PushToken_Key';
+var pushToken = '';
+
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -34,20 +39,28 @@ class Login extends Component {
 
   async _requestLogin()
   {
-    this.props.pushView(OFNavigationType_home,true); return;
+    // this.props.pushView(OFNavigationType_home,true); return;
     let loginButton = this.refs.loginButton;
     if (loginButton[this.state.symbol] === true) {
       console.log("正在请求");
       return;
     };
     loginButton[this.state.symbol] = true;
-    let result = await fetch('https://oatest.camera360.com/orderfood/user/login?email=zhangzhi@camera360.com&password=April122014');
+    pushToken = this.state.username + 'and' + Date.parse(new Date());
+    var result = await fetch('https://oatest.camera360.com/orderfood/user/login?email=' + this.state.username + '&password=' + encodeURI(this.state.password) + '&pushToken='+pushToken+'&platform=ios');
+    // let result = await fetch('https://oatest.camera360.com/orderfood/user/login?email=zhangzhi@camera360.com&password='+encodeURI('April122014')+'&pushToken='+pushToken+'&platform=ios');
+
     result.json().then(data => {
       loginButton[this.state.symbol] = false;
       if (data.status === 200) {
-        this.props.pushView(OFNavigationType_home);
+        this.props.pushView(OFNavigationType_home,true);
+        loginButton[this.state.symbol] = false;
+        AsyncStorage.multiSet([[Storage_UserId_Key, data.data.uId.toString()],[Storage_UserEmail_Key, data.data.email.toString()],[Storage_PushToken_Key, pushToken]])
+          .then(() => console.log('Saved data to disk'))
+          .catch((error) => console.log('AsyncStorage error: ' + error.message))
+          .done();
       }else{
-
+        loginButton[this.state.symbol] = false;
       }
     });
   }

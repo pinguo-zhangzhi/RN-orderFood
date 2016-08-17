@@ -15,16 +15,21 @@ import {
   ListView,
   AlertIOS,
   ScrollView,
+  AsyncStorage,
   NavigationExperimental
 } from 'react-native'
 
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
 import * as Untils from '../commonUtils'
-import listData from './listMock'
 import foodPhotosIndex from '../foodPhoto'
 import TopBar from '../common/topBarView'
 
-let urlPath = 'https://oa.camera360.com/orderfood/order/GetAllowTime'
+var Storage_UserId_Key = 'Storage_UserId_Key';
+var Storage_UserEmail_Key = 'Storage_UserEmail_Key';
+var Storage_PushToken_Key = 'Storage_PushToken_Key';
+
+var loginEmail,pushToken,userId;
+var listData;
 
 var OrderListView = React.createClass({
 
@@ -39,6 +44,44 @@ var OrderListView = React.createClass({
 
   componentWillMount: function() {
     this._pressData = {};
+    AsyncStorage.multiGet([Storage_UserEmail_Key,Storage_PushToken_Key,Storage_UserId_Key])
+          .then((value) => {
+            if (value !== null){
+              loginEmail = value[0][1];
+              pushToken = value[1][1];
+              userId = value[2][1];
+              this._rquestData();
+            } else {
+              console.log('AsyncStorage fail' )
+            }
+          })
+          .catch((error) => console.log('AsyncStorage error: ' + error.message))
+          .done();
+  },
+
+  _rquestData:function(){
+    var _this = this;
+
+    fetch('https://oatest.camera360.com/orderfood/order/getOrderStatisticsByuId?uid='+userId +'&pushToken='+pushToken+'&email='+loginEmail+'&day=20160816')
+    .then(function(response){
+      var __this = _this;
+      response.json().then(data => {
+        var ___this = __this;
+        ___this._handlerRequestDataSuccess(data);
+        // requestTotalArray = HomeUtils.processOrderData(data);
+        // ___this.setState({totalArray:requestTotalArray});
+      });
+    });
+  },
+  _handlerRequestDataSuccess:function(data){
+    if (data.status != 200 || data.data.length == 0) {
+      return;
+    }
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    listData = data;
+    this.setState({
+      dataSource: ds.cloneWithRows(this._genRows({})),
+    });
   },
 
   _backClickHandler:function(){
@@ -46,17 +89,28 @@ var OrderListView = React.createClass({
   },
 
   render: function() {
-    return (
+    if (listData && listData !== null) {
+      return (
+          <View style={styles.mainContainer}>
+              <TopBar style={styles.topBarStyle} clickBackView={this._backClickHandler} />
+              <ListView style={styles.listView}
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRow}
+                renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
+                renderSeparator={this._renderSeparator}
+              />
+          </View>
+      );
+    }
+    else {
+      return (
         <View style={styles.mainContainer}>
             <TopBar style={styles.topBarStyle} clickBackView={this._backClickHandler} />
-            <ListView style={styles.listView}
-              dataSource={this.state.dataSource}
-              renderRow={this._renderRow}
-              renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
-              renderSeparator={this._renderSeparator}
-            />
+            <View style={styles.noDataStyle}><Text>没有订单哦</Text></View>
         </View>
-    );
+        );
+    }
+
   },
   // rowData
   // "email": "mang@camera360.com","nickname": "马",  "groupName": "想拍就拍",  "groupId": "25","foodName": "晚餐",
@@ -106,7 +160,9 @@ var OrderListView = React.createClass({
 
   _genRows: function(pressData: {[key: number]: boolean}): Array<string> {
     var dataBlob = [];
-    dataBlob = Untils.getFoodList(listData);//listData.data;
+    if (listData && listData !== null) {
+      dataBlob = Untils.getFoodList(listData);//listData.data;
+    }
     return dataBlob;
   },
 
@@ -130,6 +186,13 @@ const styles = StyleSheet.create({
   },
   topBarStyle:{
     flex:2,
+  },
+  noDataStyle:{
+    flex:8,
+    marginTop:2,
+    backgroundColor:'#f6f6f6',
+    justifyContent: 'center',
+    alignItems:'center',
   },
   listView: {
     flex:8,

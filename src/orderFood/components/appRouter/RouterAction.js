@@ -8,6 +8,7 @@ import {
   View,
   TouchableHighlight,
   ScrollView,
+  AsyncStorage,
   NavigationExperimental
 } from 'react-native'
 
@@ -19,6 +20,8 @@ const {
 export const OFNavigationType_login = "OFNavigationType_login";
 export const OFNavigationType_home = "OFNavigationType_home";
 export const OFNavigationType_list = "OFNavigationType_list";
+
+var Storage_UserId_Key = 'Storage_UserId_Key';
 
 export function RouteToView(type){
   var obj = {
@@ -46,6 +49,16 @@ const RouterReducer = function(currentState = NaviState, action){
       break;
     default:
         NaviState = currentState;
+        AsyncStorage.getItem(Storage_UserId_Key)
+        .then((value) => {
+          if (value !== null){
+            NaviState.routes =  [{key: OFNavigationType_home}];
+            currentState.routes =  [{key: OFNavigationType_home}];
+          } else {
+          }
+        })
+        .catch((error) => console.log('AsyncStorage error: ' + error.message))
+        .done();
         return NaviState;
       break;
   }

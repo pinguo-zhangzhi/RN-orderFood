@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   ScrollView,
   Animated,
+  AsyncStorage,
   NavigationExperimental as Navigation
 } from 'react-native'
 
@@ -18,6 +19,8 @@ import Login from '../../views/Login/Login'
 import Home from '../../views/Home/Home'
 import List from '../../views/orderList/orderList'
 
+var Storage_UserId_Key = 'Storage_UserId_Key';
+
 const {
  CardStack: NavigationCardStack,
  StateUtils: NavigationStateUtils
@@ -26,13 +29,30 @@ const {
 class NavigationView extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      navState: RouterReducer({
-        index: 0,
-        key: 'OrderFood',
-        routes: [{key: OFNavigationType_login}]}, {}),
-      animated:true
-    }
+    AsyncStorage.getItem(Storage_UserId_Key)
+    .then((value) => {
+      if (value !== null){
+        this.setState({
+          navState: RouterReducer({
+            index: 0,
+            key: 'OrderFood',
+            routes: [{key: OFNavigationType_home}]}, {}),
+          animated:true
+        });
+        NaviState.routes =  [{key: OFNavigationType_home}];
+      } else {
+        this.setState({
+          navState: RouterReducer({
+            index: 0,
+            key: 'OrderFood',
+            routes: [{key: OFNavigationType_login}]}, {}),
+          animated:true
+        });
+      }
+    })
+    .catch((error) => console.log('AsyncStorage error: ' + error.message))
+    .done();
+
   }
 
   _pushView(OFNavigationType, animated){
@@ -91,29 +111,32 @@ class NavigationView extends Component {
   }
 
   render() {
-    return (
-      <Navigation.AnimatedView
-        style={{flex: 1}}
-        navigationState={this.state.navState}
-        renderScene={this._renderNavigationCard.bind(this)}
-        applyAnimation={function(pos, navState){
-          if (this.state.animated) {
-            Animated
-              .spring(pos, {toValue: navState.index, duration:200, bounciness: 0})
-              .start(function(){
-                this._navigationCompleted();
-              }.bind(this));
-          }else{
-            Animated
-              .timing(pos, {toValue: navState.index, duration:0, bounciness: 0})
-              .start(function(){
-                this._navigationCompleted();
-              }.bind(this));
-          }
+    if (this.state) {
+      return (
+        <Navigation.AnimatedView
+          style={{flex: 1}}
+          navigationState={this.state.navState}
+          renderScene={this._renderNavigationCard.bind(this)}
+          applyAnimation={function(pos, navState){
+            if (this.state.animated) {
+              Animated
+                .spring(pos, {toValue: navState.index, duration:200, bounciness: 0})
+                .start(function(){
+                  this._navigationCompleted();
+                }.bind(this));
+            }else{
+              Animated
+                .timing(pos, {toValue: navState.index, duration:0, bounciness: 0})
+                .start(function(){
+                  this._navigationCompleted();
+                }.bind(this));
+            }
 
-        }.bind(this)}
-       />
-    )
+          }.bind(this)}
+         />
+      )
+    }
+    return (<View><Text>loading</Text></View>)
     // return (
     //   <NavigationCardStack
     //     navigationState={this.state.navState}
