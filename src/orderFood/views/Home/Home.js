@@ -12,13 +12,19 @@ import {
   TouchableOpacity,
   ScrollView,
   AlertIOS,
+  AsyncStorage,
+  ActivityIndicator,
   NavigationExperimental
 } from 'react-native'
 
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
-import orderData from './homeMock'
 import * as CommonUtils from '../commonUtils'
 import * as HomeUtils from './HomeUtils'
+import OrderCountEntity from './OrderCountEntity'
+
+var Storage_UserId_Key = 'Storage_UserId_Key';
+var Storage_UserEmail_Key = 'Storage_UserEmail_Key';
+var Storage_PushToken_Key = 'Storage_PushToken_Key';
 
 const Button = ({title, onPress, isSelected}) => (
   <TouchableOpacity
@@ -49,27 +55,80 @@ const OrderView = ({viewImage, viewStyle,selectedState, plusePress,pluseImage,re
   <View style = {viewStyle}>
       <Image style={styles.foodStyle}  source={viewImage} />
       <Image style={selectedState?styles.seletedStyle:styles.unseletedStyle}  source={require('../../assets/selected_mask.png')} />
-      <TouchableOpacity  onPress={plusePress}>
+      <TouchableOpacity  onPress={reduePress}>
            <Image style={styles.actionImage} source={reduceImage}  />
       </TouchableOpacity>
       <Text style = {styles.orderCountText}>{countNum}</Text>
-      <TouchableOpacity  onPress={reduePress}>
+      <TouchableOpacity  onPress={plusePress}>
            <Image style={styles.actionImage} source={pluseImage} />
       </TouchableOpacity>
       <Text style = {styles.orderFoodNameText}>{title}</Text>
   </View>
 )
 
+var requestTotalArray = [];
+var loginEmail,pushToken,loingUserId;
+
 class Home extends Component {
 
   constructor(props) {
     super(props)
-    var totalArray = HomeUtils.processOrderData(orderData);
     this.state = {
-      totalArray:totalArray,
+      totalArray:[],
       orderState:'breakfast',
-      selectedWeekDay:999
+      selectedWeekDay:999,
+      westFoodMaxCount:2,
+      chinaFoodMaxCount:3,
+      lunchOrDinnerMaxCount:1,
+      maxWaterCount:1,
+      weekDayFoodCountEntity:OrderCountEntity,
+      currentFoodCount:0,
+      currentWaterCount:0,
     }
+  }
+  componentWillMount(){
+
+  }
+  componentDidMount(){
+    AsyncStorage.multiGet([Storage_UserEmail_Key,Storage_PushToken_Key,Storage_UserId_Key])
+          .then((value) => {
+            if (value !== null){
+              loginEmail = value[0][1];
+              pushToken = value[1][1];
+              loingUserId = value[2][1];
+              this._beginRquestData();
+            } else {
+              console.log('AsyncStorage fail' )
+            }
+          })
+          .catch((error) => console.log('AsyncStorage error: ' + error.message))
+          .done();
+  }
+  _beginRquestData(){
+    var _this = this;
+    fetch('https://oatest.camera360.com/orderfood/order/GetAllowTime', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: loginEmail,
+            pushToken: pushToken,
+            platform:'ios'
+        })
+    })
+    .then(function(response){
+      var __this = _this;
+      response.json().then(data => {
+        var ___this = __this;
+        ___this._handlerRequestDataSuccess(data);
+      });
+    });
+  }
+  _handlerRequestDataSuccess(data){
+    requestTotalArray = HomeUtils.processOrderData(data);
+    this.setState({totalArray:requestTotalArray});
   }
   ////////pressHandler////////
   _onPress(){
@@ -90,14 +149,234 @@ class Home extends Component {
   _onPressWeekDay(pressDay){
     this.setState({selectedWeekDay:pressDay});
   }
-  _onPressPlus(foodId){
+  _onPressPlus(foodInfo){
+    var weekItems = HomeUtils.getWeekDaysByType(this.state.totalArray,this.state.orderState);
+    var currentSelectedWeek = this.state.selectedWeekDay > 7 ? weekItems[0].weekDay : this.state.selectedWeekDay;
+    var foodItemInfo = HomeUtils.getFoodByTypeAndWeek(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+    var canOrderFood = HomeUtils.getCanOrderStatus(foodItemInfo,this.state.orderState);
+    if (!canOrderFood) return;//如果已经是下单了的，不能加减
+    var maxFoodCount;
+    var currentFoodNum;
+    //西餐
+    if (currentSelectedWeek == 1 || currentSelectedWeek == 3 || currentSelectedWeek== 5 || currentSelectedWeek == 7) {
+      if (this.state.orderState == 'dinner' ) {
+        maxFoodCount = this.state.lunchOrDinnerMaxCount;
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount;
+      } else if (this.state.orderState == 'lunch') {
+        maxFoodCount = this.state.lunchOrDinnerMaxCount;
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount;
+      } else {
+        maxFoodCount = this.state.westFoodMaxCount;
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount;
+      }
 
+      if (currentFoodNum >= maxFoodCount) {
+        console.log('已经超出全部总类限制上限了');
+        return;
+      }
+      if (foodInfo.foodId == '13' || foodInfo.foodId == '20')
+      {
+          //牛奶等液体，最多点一个
+          if (this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount < this.state.maxWaterCount) {
+            var foocount = this.state.weekDayFoodCountEntity[currentSelectedWeek];
+            foocount.currentWaterCount += 1;
+            foocount.currentFoodCount += 1;
+          }else {
+            return;
+          }
+      }
+      else {
+        if (this.state.orderState == 'breakfast') {
+          if (maxFoodCount - this.state.maxWaterCount > this.state.weekDayFoodCountEntity[currentSelectedWeek].currentSolidCount) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentSolidCount += 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount += 1;
+          }else {
+            return;
+          }
+        }else if(this.state.orderState == 'lunch'){
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount += 1;
+        }else {
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount += 1;
+        }
+      }
+    }else { //中餐
+      if (this.state.orderState == 'dinner' ) {
+        maxFoodCount = this.state.lunchOrDinnerMaxCount;
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount;
+      } else if (this.state.orderState == 'lunch') {
+        maxFoodCount = this.state.lunchOrDinnerMaxCount;
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount;
+      } else {
+        maxFoodCount = this.state.chinaFoodMaxCount;
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount;
+      }
+      if (currentFoodNum >= maxFoodCount) {
+        console.log('已经超出全部总类限制上限了');
+        return;
+      }
+      if (foodInfo.foodId == '11')
+      {
+          //牛奶等液体，最多点一个
+          if (this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount < this.state.maxWaterCount) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount += 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount += 1;
+          }else {
+            return;
+          }
+      }
+      else {
+        if (this.state.orderState == 'breakfast') {
+          if (maxFoodCount - this.state.maxWaterCount > this.state.weekDayFoodCountEntity[currentSelectedWeek].currentSolidCount) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentSolidCount += 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount += 1;
+          }else {
+            return;
+          }
+        }else if(this.state.orderState == 'lunch'){
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount += 1;
+        }else {
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount += 1;
+        }
+      }
+    }
+    foodInfo.num += 1;
+    var newTotalArray = HomeUtils.updateTotalArray(this.state.totalArray,this.state.orderState,currentSelectedWeek, foodInfo);
+    this.setState({totalArray:newTotalArray});
   }
-  _onPressReduce(foodId){
+  _onPressReduce(foodInfo){
+    var weekItems = HomeUtils.getWeekDaysByType(this.state.totalArray,this.state.orderState);
+    var currentSelectedWeek = this.state.selectedWeekDay > 7 ? weekItems[0].weekDay : this.state.selectedWeekDay;
+    var foodItemInfo = HomeUtils.getFoodByTypeAndWeek(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+    var canOrderFood = HomeUtils.getCanOrderStatus(foodItemInfo,this.state.orderState);
+    if (!canOrderFood) return;//如果已经是下单了的，不能加减
 
+    var currentFoodNum;
+    //西餐
+    if (currentSelectedWeek == 1 || currentSelectedWeek == 3 || currentSelectedWeek== 5 || currentSelectedWeek == 7) {
+      if (this.state.orderState == 'dinner' ) {
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount;
+      } else if (this.state.orderState == 'lunch') {
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount;
+      } else {
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount;
+      }
+      if (currentFoodNum == 0) {
+        console.log('数量已经为0');
+        return;
+      }
+      if (foodInfo.foodId == '13' || foodInfo.foodId == '20')
+      {
+          //牛奶等液体
+          if (foodInfo.num > 0 && this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount > 0) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount -= 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount -= 1;
+          }else {
+            return;
+          }
+      }
+      else {
+        if (this.state.orderState == 'breakfast') {
+          if (foodInfo.num > 0) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentSolidCount -= 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount -= 1;
+          }else {
+            return;
+          }
+        }else if(this.state.orderState == 'lunch'){
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount -= 1;
+        }else {
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount -= 1;
+        }
+      }
+    }else {
+      if (this.state.orderState == 'dinner' ) {
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount;
+      } else if (this.state.orderState == 'lunch') {
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount;
+      } else {
+        currentFoodNum = this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount;
+      }
+      if (currentFoodNum == 0) {
+        console.log('数量已经为0');
+        return;
+      }
+      if (foodInfo.foodId == '11')
+      {
+          //豆浆等液体，最多点一个
+          if (foodInfo.num > 0 && this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount > 0) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentWaterCount -= 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount -= 1;
+          }else {
+            return;
+          }
+      }
+      else {
+        if (this.state.orderState == 'breakfast') {
+          if (foodInfo.num > 0) {
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentSolidCount -= 1;
+            this.state.weekDayFoodCountEntity[currentSelectedWeek].currentFoodCount -= 1;
+          }else {
+            return;
+          }
+        }else if(this.state.orderState == 'lunch'){
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentLunchCount -= 1;
+        }else {
+          this.state.weekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount -= 1;
+        }
+      }
+    }
+    foodInfo.num -= 1;
+    var newTotalArray = HomeUtils.updateTotalArray(this.state.totalArray,this.state.orderState,currentSelectedWeek, foodInfo);
+    this.setState({totalArray:newTotalArray});
   }
   _onPressOrderBtn(){
+    var weekItems = HomeUtils.getWeekDaysByType(this.state.totalArray,this.state.orderState);
+    var currentSelectedWeek = this.state.selectedWeekDay > 7 ? weekItems[0].weekDay : this.state.selectedWeekDay;
+    var foodItemInfo = HomeUtils.getFoodByTypeAndWeek(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+    var canOrderFood = HomeUtils.getCanOrderStatus(foodItemInfo,this.state.orderState);
+    var currentFoodType = HomeUtils.getFoodTypeByState(this.state.orderState);//1早餐 2 晚餐 3午餐
+    var _this = this;
+    if (!canOrderFood) {
+      console.log("取消订单");
+      var requestUrl = 'https://oatest.camera360.com/orderfood/order/cancelOrder?email='+loginEmail+'&pushToken='
+                        +pushToken+'&uId='+loingUserId
+                        +'&type='+currentFoodType+'&day='+foodItemInfo.day;
+      fetch(requestUrl)
+      .then(function(response){
+          var __this = _this;
+          response.json().then(data => {
+            var ___this = __this;
+            ___this._handleCancelOrderSuccess(data,currentSelectedWeek);
+          });
+        });
+    }else {
+      console.log('开始下单');
+      var orderFoods = HomeUtils.getOrderFoodsByFoodItemInfo(foodItemInfo,currentFoodType);
+      var requestUrl = 'https://oatest.camera360.com/orderfood/order/create?email='+loginEmail+'&pushToken='
+                        +pushToken+'&userId='+loingUserId
+                        +'&type='+currentFoodType+'&orderdate='+foodItemInfo.day+'&foods='+JSON.stringify(orderFoods);
+      fetch(requestUrl)
+      .then(function(response){
+        var __this = _this;
+        response.json().then(data => {
+          var ___this = __this;
+          ___this._handleOrderSuccess(data, currentSelectedWeek);
+        });
+      });
+    }
+  }
+  _handleCancelOrderSuccess(data,currentSelectedWeek){
+    if (data.status == 200) {
+      var newtotoalArray = HomeUtils.updateCancelOrderType(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+      this.setState({totalArray:newtotoalArray,currentFoodCount:0});
+    }
+  }
 
+  _handleOrderSuccess(data,currentSelectedWeek){
+    if (data.status == 200) {
+      var newtotoalArray = HomeUtils.updateOrderType(this.state.totalArray,this.state.orderState,currentSelectedWeek);
+      this.setState({totalArray:newtotoalArray,currentFoodCount:0});
+    }
   }
 
   ////////makeItemsHandler////////
@@ -131,9 +410,9 @@ class Home extends Component {
           <OrderView viewImage={foodImageSource}
                      viewStyle = {styles.orderItem}
                      selectedState={itemData.num >0 ? true : false}
-                     plusePress={this._onPressPlus.bind(this,itemData.foodId)}
+                     plusePress={this._onPressPlus.bind(this,itemData)}
                      pluseImage={foodPluseImageSource}
-                     reduePress={this._onPressReduce.bind(this,itemData.foodId)}
+                     reduePress={this._onPressReduce.bind(this,itemData)}
                      reduceImage={foodReduceImageSource}
                      title={itemData.foodName}
                      countNum={itemData.num}
@@ -156,7 +435,14 @@ class Home extends Component {
   }
 
   render() {
-
+    if (this.state.totalArray.length == 0)
+    {
+        return (<ActivityIndicator
+                  animating={this.state.animating}
+                  style={[styles.centering, {height: 80}]}
+                  size="large"
+                />);
+    }
     var verticalScrollView = (
       <View style={styles.mainContainer}>
         <View style={styles.topBarContainer}>
@@ -189,7 +475,8 @@ const styles = StyleSheet.create({
 
   mainContainer: {
     backgroundColor: '#eaeaea',
-    flex:1
+    flex:1,
+    marginTop:15
   },
   topBarContainer:{
     height:50,
