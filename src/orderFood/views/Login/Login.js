@@ -8,6 +8,9 @@ import {
   TextInput,
   View,
   Image,
+  Alert,
+  Animated,
+  Easing,
   TouchableHighlight,
   NavigationExperimental,
   Dimensions,
@@ -17,6 +20,7 @@ import {
 
 import {OFNavigationType_login, OFNavigationType_home, OFNavigationType_list} from '../../components/appRouter/RouterAction'
 const itemWidth = Dimensions.get('window').width
+const itemHeight = Dimensions.get('window').height
 
 var Storage_UserId_Key = 'Storage_UserId_Key';
 var Storage_UserEmail_Key = 'Storage_UserEmail_Key';
@@ -29,7 +33,9 @@ class Login extends Component {
     this.state = {
       username:'',
       password:'',
-      symbol:Symbol('isRequesting')
+      symbol:Symbol('isRequesting'),
+      rotateValue:new Animated.Value(0),
+      isLoading:false,
     }
   }
 
@@ -61,21 +67,51 @@ class Login extends Component {
           .done();
       }else{
         loginButton[this.state.symbol] = false;
+        Alert.alert(
+            '登录失败',
+            '账号或者密码不对',
+        );
+        this.setState({isLoading:false});
       }
     });
   }
 
   _onPress(){
-    // const {username, password} = this.state;
-    // if (username === '' || password === '') {
-    //   console.log("用户名或密码不能为空");
-    //   return false;
-    // }
-    // if (!username.includes('@') || username.startsWith('@') || username.endsWith('@')) {
-    //   console.log("邮箱格式不正确");
-    //   return false;
-    // }
+
+
+    const {username, password} = this.state;
+    if (username === '') {
+      Alert.alert(
+          '登录失败',
+          '请输入邮箱账号',
+      );
+      return;
+    }
+    if (password === '') {
+      Alert.alert(
+          '登录失败',
+          '请输入密码',
+      );
+      return;
+    }
+    if (this.state.isLoading) {
+      return;
+    }
+    this.setState({isLoading:true});
+    this._startAnimation();
     this._requestLogin();
+  }
+
+  _startAnimation() {
+    this.state.rotateValue.setValue(0);
+    var timing = Animated.timing;
+    Animated.parallel(['rotateValue'].map(property => {
+                return timing(this.state[property], {
+                toValue: 1,
+                duration: 1000,
+                easing: Easing.linear
+            });
+        })).start(() => this._startAnimation());
   }
 
   _userNameChange(text){
@@ -86,21 +122,54 @@ class Login extends Component {
     this.setState({password: text.trim()});
   }
 
-  render(){
-    return (
+  _makeLoadingView(){
+    return(
+        <Animated.Image
+            source={require('../../assets/loading.png')}
+            style={[styles.loading, {
+                        top:(itemHeight - 48)/2,
+                        left:(itemWidth - 48)/2,
+                        transform: [{
+                          rotateZ: this.state.rotateValue.interpolate({
+                              inputRange: [0,1],
+                              outputRange: ['0deg', '360deg']
+                          })
+                      }]
+            }]}
+          >
+        </Animated.Image>
+    );
+  }
+
+  _makeLoginView(){
+    return(
       <View style={styles.container}>
-        <Image source={require('../../assets/login_logo.png')} style={styles.backgroundImage} />
-        <Text style={styles.title} >品果订餐系统</Text>
-        <Text style={styles.loginText}>登录</Text>
-        <TextInput style={styles.userInput} returnKeyType="done" keyboardType="email-address" numberoflines="{1}" onChangeText={this._userNameChange.bind(this)} placeholder="QQ号/手机号/邮箱" underlinecolorandroid="{'transparent'}" />
-        <TextInput style={styles.passwordInput} returnKeyType="done" secureTextEntry={true} numberoflines="{1}" onChangeText={this._passwordChange.bind(this)} placeholder="密码" underlinecolorandroid="{'transparent'}" />
-        <TouchableHighlight ref='loginButton'
-          style={{backgroundColor:'#eaeaea'}}
-          onPress={this._onPress.bind(this)}>
-            <Text style={styles.button}>登录</Text>
-        </TouchableHighlight>
+       <Image source={require('../../assets/login_logo.png')} style={styles.backgroundImage} />
+       <Text style={styles.title} >品果订餐系统</Text>
+       <Text style={styles.loginText}>登录</Text>
+       <TextInput style={styles.userInput} returnKeyType="done" keyboardType="email-address" numberoflines="{1}" onChangeText={this._userNameChange.bind(this)} placeholder="QQ号/手机号/邮箱" underlinecolorandroid="{'transparent'}" />
+       <TextInput style={styles.passwordInput} returnKeyType="done" secureTextEntry={true} numberoflines="{1}" onChangeText={this._passwordChange.bind(this)} placeholder="密码" underlinecolorandroid="{'transparent'}" />
+       <TouchableHighlight ref='loginButton'
+         style={{backgroundColor:'#eaeaea'}}
+         onPress={this._onPress.bind(this)}>
+           <Text style={styles.button}>登录</Text>
+       </TouchableHighlight>
       </View>
-    )
+    );
+  }
+
+  render(){
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.container}>
+          {this._makeLoginView()}
+          {this._makeLoadingView()}
+        </View>
+      );
+    }
+    return (
+        this._makeLoginView()
+    );
   }
 }
 
@@ -115,6 +184,11 @@ const Button = ({title, onPress}) => (
 export default Login;
 
 const styles = StyleSheet.create({
+  loading: {
+    position:'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: '#eaeaea',

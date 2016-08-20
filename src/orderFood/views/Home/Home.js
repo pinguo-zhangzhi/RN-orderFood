@@ -35,11 +35,11 @@ const Button = ({title, onPress, isSelected}) => (
   </TouchableOpacity>
 )
 
-const WeekButton = ({title, onPress, isSelected}) => (
+const WeekButton = ({title, onPress, isSelected,isBuyState}) => (
   <TouchableOpacity
     onPress={onPress}
-    style={isSelected?styles.weekDaySelected:styles.weekDay}>
-      <Text style={styles.weekDayText}>{title}</Text>
+    style={isBuyState? styles.weekDayBuyed : (isSelected?styles.weekDaySelected:styles.weekDay)}>
+      <Text style={isBuyState? styles.weekDayTextSelected : (isSelected?styles.weekDayTextSelected:styles.weekDayText)}>{title}</Text>
   </TouchableOpacity>
 )
 
@@ -81,9 +81,7 @@ class Home extends Component {
       chinaFoodMaxCount:3,
       lunchOrDinnerMaxCount:1,
       maxWaterCount:1,
-      weekDayFoodCountEntity:OrderCountEntity,
-      currentFoodCount:0,
-      currentWaterCount:0,
+      weekDayFoodCountEntity:OrderCountEntity
     }
   }
   componentWillMount(){
@@ -368,14 +366,25 @@ class Home extends Component {
   _handleCancelOrderSuccess(data,currentSelectedWeek){
     if (data.status == 200) {
       var newtotoalArray = HomeUtils.updateCancelOrderType(this.state.totalArray,this.state.orderState,currentSelectedWeek);
-      this.setState({totalArray:newtotoalArray,currentFoodCount:0});
+      var newWeekDayFoodCountEntity = this.state.weekDayFoodCountEntity;
+      if (this.state.orderState == 'breakfast') {
+        newWeekDayFoodCountEntity[currentSelectedWeek].currentWaterCount = 0;
+        newWeekDayFoodCountEntity[currentSelectedWeek].currentSolidCount = 0;
+        newWeekDayFoodCountEntity[currentSelectedWeek].currentFoodCount = 0;
+      }else if(this.state.orderState == 'lunch'){
+        newWeekDayFoodCountEntity[currentSelectedWeek].currentLunchCount = 0;
+      }else {
+        newWeekDayFoodCountEntity[currentSelectedWeek].currentDinnerCount = 0;
+      }
+
+      this.setState({totalArray:newtotoalArray});
     }
   }
 
   _handleOrderSuccess(data,currentSelectedWeek){
     if (data.status == 200) {
       var newtotoalArray = HomeUtils.updateOrderType(this.state.totalArray,this.state.orderState,currentSelectedWeek);
-      this.setState({totalArray:newtotoalArray,currentFoodCount:0});
+      this.setState({totalArray:newtotoalArray});
     }
   }
 
@@ -387,8 +396,15 @@ class Home extends Component {
     for (var i = 0; i < weekItems.length; i++) {
       var itemData = weekItems[i];
       var weekname = CommonUtils.dateToChina(parseInt(itemData.weekDay));
+      var buyName = this.state.orderState + 'BuyStatus';
+      var isBuyStatus = itemData[buyName];
         weekItems[i] = (
-            <WeekButton onPress={this._onPressWeekDay.bind(this,itemData.weekDay)} isSelected={parseInt(itemData.weekDay) == currentSelectedWeek} key={'weekButton-'+i} title={weekname}/>
+            <WeekButton title={weekname}
+                        onPress={this._onPressWeekDay.bind(this,itemData.weekDay)}
+                        isSelected={parseInt(itemData.weekDay) == currentSelectedWeek}
+                        isBuyState={!isBuyStatus}
+                        key={'weekButton-'+i}
+            />
         );
     }
     return weekItems;
@@ -538,9 +554,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor:'#da5046'
   },
+  weekDayBuyed:{
+    margin:5,
+    width:40,
+    height:40,
+    borderRadius:20,
+    borderWidth:1,
+    borderColor:'#8fbca1',
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:'#8fbca1'
+  },
   weekDayText:{
     fontSize:12,
-    color:'black'
+    color:'#da5046'
+  },
+  weekDayTextSelected:{
+    fontSize:12,
+    color:'white'
   },
   //////食物选择样式
   foodListContainer: {
