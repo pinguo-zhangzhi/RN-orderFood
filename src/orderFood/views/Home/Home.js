@@ -26,6 +26,10 @@ var Storage_UserId_Key = 'Storage_UserId_Key';
 var Storage_UserEmail_Key = 'Storage_UserEmail_Key';
 var Storage_PushToken_Key = 'Storage_PushToken_Key';
 
+var deviceInfo = require('react-native');
+var {Platform} = deviceInfo;
+var deviceOS = Platform.OS;
+
 const Button = ({title, onPress, isSelected}) => (
   <TouchableOpacity
     underlayColor='#EFEFEF'
@@ -460,8 +464,8 @@ class Home extends Component {
                 />);
     }
     var verticalScrollView = (
-      <View style={styles.mainContainer}>
-        <View style={styles.topBarContainer}>
+      <View style={deviceOS == 'ios' ? styles.mainContainerForIOS : styles.mainContainerForAndroid}>
+        <View style={deviceOS == 'ios' ? styles.topBarContainerForIos : styles.topBarContainerForAndroid}>
             <Button onPress={this._onPressBreakfast.bind(this)} isSelected={'breakfast'===this.state.orderState} title="早餐点餐" key= {0} />
             <Button onPress={this._onPressMidDinner.bind(this)} isSelected={'lunch'===this.state.orderState} title="午餐点餐"  key= {1}/>
             <Button onPress={this._onPressDinner.bind(this)} isSelected={'dinner'===this.state.orderState} title="晚餐点餐"  key= {2}/>
@@ -489,14 +493,25 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
 
-  mainContainer: {
+  mainContainerForIOS: {
     backgroundColor: '#eaeaea',
     flex:1,
     marginTop:15
   },
-  topBarContainer:{
+  mainContainerForAndroid: {
+    backgroundColor: '#eaeaea',
+    flex:1,
+    marginTop:0
+  },
+  topBarContainerForIos:{
     height:50,
     marginTop:15,
+    flexDirection:'row',
+    flex:2,
+  },
+  topBarContainerForAndroid:{
+    height:50,
+    marginTop:0,
     flexDirection:'row',
     flex:2,
   },

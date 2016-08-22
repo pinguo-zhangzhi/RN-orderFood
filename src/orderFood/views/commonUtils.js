@@ -125,13 +125,7 @@ export function getFoodNameByName(name){
   }
 }
 
-export function getWeekDay(dateStr){
-    var d = dateStr.substring(dateStr.length-2,dateStr.length);
-		var m = dateStr.substring(dateStr.length-4,dateStr.length-2);
-		var y = dateStr.substring(0,4);
-		var date = new Date(y+"-"+m+"-"+d).getDay();//星期几
-    return dateToChina(date);
-}
+
 
 export function getDay(dateStr){
   var d = dateStr.substring(dateStr.length-2,dateStr.length);
@@ -141,4 +135,13 @@ export function getDay(dateStr){
 export function getMonth(dateStr){
   var m = dateStr.substring(dateStr.length-4,dateStr.length-2);
   return m + '月';
+}
+
+export function getWeekDay(dateStr){
+    var d = dateStr.substring(dateStr.length-2,dateStr.length);
+		var m = dateStr.substring(dateStr.length-4,dateStr.length-2);
+		var y = dateStr.substring(0,4);
+		var date = new Date(y+"-"+m+"-"+d).getDay();//星期几
+    var week = dateToChina(date);
+    return week;
 }
