@@ -143,5 +143,6 @@ export function getWeekDay(dateStr){
 		var y = dateStr.substring(0,4);
 		var date = new Date(y+"-"+m+"-"+d).getDay();//星期几
     var week = dateToChina(date);
+    console.log(week);
     return week;
 }
