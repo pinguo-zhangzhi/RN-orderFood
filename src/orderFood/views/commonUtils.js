@@ -99,6 +99,27 @@ export function getFoodNameByName(name){
     case '三明治':
       return require('../assets/smz.png');
       break;
+    case '八宝粥':
+      return require('../assets/bbz.png');
+      break;
+    case '白菜包':
+      return require('../assets/bcb.png');
+      break;
+    case '茶叶蛋':
+      return require('../assets/cyd.png');
+      break;
+    case '稀饭':
+      return require('../assets/xf.png');
+      break;
+    case '香菇肉包':
+      return require('../assets/xgrb.png');
+      break;
+    case '竹笋肉包':
+      return require('../assets/zsrb.png');
+      break;
+    case '银耳粥':
+      return require('../assets/yez.png');
+      break;
     default:
       return require('../assets/wc.png');
   }
