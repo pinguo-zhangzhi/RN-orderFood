@@ -53,7 +53,7 @@ class Login extends Component {
     };
     loginButton[this.state.symbol] = true;
     pushToken = this.state.username + 'and' + Date.parse(new Date());
-    var result = await fetch('https://oatest.camera360.com/orderfood/user/login?email=' + this.state.username + '&password=' + encodeURI(this.state.password) + '&pushToken='+pushToken+'&platform=ios');
+    var result = await fetch('https://oa.camera360.com/orderfood/user/login?email=' + this.state.username + '&password=' + encodeURI(this.state.password) + '&pushToken='+pushToken+'&platform=ios');
     // let result = await fetch('https://oatest.camera360.com/orderfood/user/login?email=zhangzhi@camera360.com&password='+encodeURI('April122014')+'&pushToken='+pushToken+'&platform=ios');
 
     result.json().then(data => {

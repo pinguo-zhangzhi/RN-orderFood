@@ -62,7 +62,7 @@ var OrderListView = React.createClass({
   _rquestData:function(){
     var _this = this;
     var currentDay = '';
-    fetch('https://oatest.camera360.com/orderfood/order/getOrderStatisticsByuId?uid='+userId +'&pushToken='+pushToken+'&email='+loginEmail+'&day=20160821')
+    fetch('https://oa.camera360.com/orderfood/order/getOrderStatisticsByuId?uid='+userId +'&pushToken='+pushToken+'&email='+loginEmail+'&day=20160821')
     .then(function(response){
       var __this = _this;
       response.json().then(data => {

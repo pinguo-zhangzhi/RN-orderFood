@@ -108,7 +108,7 @@ class Home extends Component {
   }
   _beginRquestData(){
     var _this = this;
-    fetch('https://oatest.camera360.com/orderfood/order/GetAllowTime', {
+    fetch('https://oa.camera360.com/orderfood/order/GetAllowTime', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -340,7 +340,7 @@ class Home extends Component {
     var _this = this;
     if (!canOrderFood) {
       console.log("取消订单");
-      var requestUrl = 'https://oatest.camera360.com/orderfood/order/cancelOrder?email='+loginEmail+'&pushToken='
+      var requestUrl = 'https://oa.camera360.com/orderfood/order/cancelOrder?email='+loginEmail+'&pushToken='
                         +pushToken+'&uId='+loingUserId
                         +'&type='+currentFoodType+'&day='+foodItemInfo.day;
       fetch(requestUrl)
@@ -354,7 +354,7 @@ class Home extends Component {
     }else {
       console.log('开始下单');
       var orderFoods = HomeUtils.getOrderFoodsByFoodItemInfo(foodItemInfo,currentFoodType);
-      var requestUrl = 'https://oatest.camera360.com/orderfood/order/create?email='+loginEmail+'&pushToken='
+      var requestUrl = 'https://oa.camera360.com/orderfood/order/create?email='+loginEmail+'&pushToken='
                         +pushToken+'&userId='+loingUserId
                         +'&type='+currentFoodType+'&orderdate='+foodItemInfo.day+'&foods='+JSON.stringify(orderFoods);
       fetch(requestUrl)
