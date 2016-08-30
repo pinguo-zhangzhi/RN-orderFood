@@ -25,7 +25,7 @@ fi
 #编译打包
 pkg -output $OUTPUT_FOLDER
 pkg -env toolchain_distribution.cfg
-pkg -make Debug 
+pkg -make Release 
 
 #查看输出
 IPA=$(find $OUTPUT_FOLDER -name "*.ipa")
