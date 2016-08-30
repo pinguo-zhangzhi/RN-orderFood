@@ -6,6 +6,6 @@
   Copyright © 2016年 Facebook. All rights reserved.
 */
 {
-  CFBundleDisplayName = "品果订餐";
+  CFBundleDisplayName = "品果订餐系统";
   "LSHasLocalizedDisplayName" = YES;
 }
