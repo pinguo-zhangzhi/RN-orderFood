@@ -18,12 +18,13 @@
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		AC5EE98F1D4F3D580044134F /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = AC5EE98E1D4F3D580044134F /* main.jsbundle */; };
+		AEFBCFC01D755FD70085BC82 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEFBCFBF1D755FD70085BC82 /* Images.xcassets */; };
+		AEFBCFCB1D756BAB0085BC82 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEFBCFCD1D756BAB0085BC82 /* infoPlist.strings */; };
 		D5E0B4566728AF86BF7D49A9 /* libPods-RNOrderFood.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5263F5957B20B694B8618533 /* libPods-RNOrderFood.a */; };
 /* End PBXBuildFile section */
 
@@ -122,7 +123,6 @@
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = RNOrderFood/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = RNOrderFood/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RNOrderFood/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RNOrderFood/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RNOrderFood/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
@@ -132,6 +132,9 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		AC5EE98E1D4F3D580044134F /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = RNOrderFood/main.jsbundle; sourceTree = "<group>"; };
+		AEFBCFBF1D755FD70085BC82 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RNOrderFood/Images.xcassets; sourceTree = "<group>"; };
+		AEFBCFCC1D756BAB0085BC82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/infoPlist.strings; sourceTree = "<group>"; };
+		AEFBCFCE1D756BAD0085BC82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/infoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,10 +246,11 @@
 				AC5EE98E1D4F3D580044134F /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				AEFBCFBF1D755FD70085BC82 /* Images.xcassets */,
+				AEFBCFCD1D756BAB0085BC82 /* infoPlist.strings */,
 			);
 			name = RNOrderFood;
 			sourceTree = "<group>";
@@ -385,9 +389,6 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
-					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 8L383J8Z8T;
 					};
 				};
 			};
@@ -537,8 +538,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEFBCFC01D755FD70085BC82 /* Images.xcassets in Resources */,
+				AEFBCFCB1D756BAB0085BC82 /* infoPlist.strings in Resources */,
 				AC5EE98F1D4F3D580044134F /* main.jsbundle in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -630,6 +632,15 @@
 			path = RNOrderFood;
 			sourceTree = "<group>";
 		};
+		AEFBCFCD1D756BAB0085BC82 /* infoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEFBCFCC1D756BAB0085BC82 /* Base */,
+				AEFBCFCE1D756BAD0085BC82 /* en */,
+			);
+			name = infoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -667,8 +678,9 @@
 			baseConfigurationReference = 65C9A7A795A65152A8A15AA6 /* Pods-RNOrderFood.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Pinguo Technology Co., Ltd.";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -682,9 +694,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.RNOrderFood.mjg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pinguo.orderfood;
 				PRODUCT_NAME = RNOrderFood;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "76dc7f34-f96a-4704-b308-828d18c86295";
 			};
 			name = Debug;
 		};
@@ -693,8 +705,9 @@
 			baseConfigurationReference = 1E1F1D2B1CF9F123D2950960 /* Pods-RNOrderFood.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Pinguo Technology Co., Ltd.";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -707,9 +720,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.RNOrderFood.mjg;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pinguo.orderfood;
 				PRODUCT_NAME = RNOrderFood;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "76dc7f34-f96a-4704-b308-828d18c86295";
 			};
 			name = Release;
 		};

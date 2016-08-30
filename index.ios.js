@@ -1,3 +1,4 @@
+import 'es6-symbol/implement';
 import {Provider} from 'react-redux';
 import React from 'react';
 import {AppRegistry} from 'react-native';
